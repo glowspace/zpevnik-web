@@ -1,6 +1,6 @@
 <template>
   <div class="top-bar-wrapper">
-    <div class="top-bar custom-container">
+    <div class="top-bar" :class="{ 'custom-container': !fullWidth }">
       <BasicButton
         v-if="mounted && $router.options.history.state.back"
         icon-name="arrow_back"
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-const props = defineProps({ title: String, isH1: Boolean });
+const props = defineProps({ title: String, isH1: Boolean, fullWidth: Boolean });
 const mounted = ref(false);
 
 onMounted(() => {

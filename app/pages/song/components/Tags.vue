@@ -50,7 +50,7 @@
         v-for="(sb, key) in publicSongbookRecords"
         :key="key"
         :class="[sb.pivot.number ? 'songbook-chip' : '', 'tag-yellow']"
-        :to="'/?zpevniky=' + sb.pivot.songbook.id + '&razeni=2'"
+        :to="'/zpevnik/' + sb.pivot.songbook.id"
       >
         <template v-if="sb.pivot.number">
           <span class="songbook-name">{{ sb.pivot.songbook.name }}</span

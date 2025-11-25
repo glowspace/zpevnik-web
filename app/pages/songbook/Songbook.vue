@@ -1,40 +1,41 @@
 <template>
-  <PageTopBar :title="songbook?.name ?? 'načítám…'">
-    <BasicButton
-      icon-name="filter_alt"
-      icon-only
-      icon-fill
-      :to="filterLink"
-    />
-    <Kebab
-      v-if="songbook"
-      :items="[
-        {
-          label: 'Nahlásit',
-          icon: 'warning',
-          href: getReportLink(),
-        },
-        {
-          label: 'Upravit',
-          icon: 'edit',
-          href: $config.public.adminUrl + '/songbook/' + songbook.id + '/edit',
-        },
-      ]"
-    />
-  </PageTopBar>
-  <div class="custom-container">
-    <div class="m-5">
-      <template v-if="pending">
-        <LoaderSkeleton type="heading" class="mt-6" />
-        <LoaderSkeleton type="paragraph" class="mt-6" />
-      </template>
-      <template v-else-if="!songbook">
-        <!-- displayed only after client-side navigation (SSR throws) -->
-        <p>Zpěvník nebyl nalezen.</p>
-      </template>
-      <template v-else>
-        <SongList :filters="filters" :sort="sort" :seed="0"></SongList>
-      </template>
+  <div class="grid grid-cols-1 md:grid-cols-[60%_1fr] xl:grid-cols-[66%_1fr]">
+    <div>
+      <PageTopBar :title="songbook?.name ?? 'načítám…'" full-width class="lg:px-4">
+        <BasicButton icon-name="filter_alt" icon-only icon-fill :to="filterLink" />
+        <Kebab
+          v-if="songbook"
+          :items="[
+            {
+              label: 'Nahlásit',
+              icon: 'warning',
+              href: getReportLink(),
+            },
+            {
+              label: 'Upravit',
+              icon: 'edit',
+              href: $config.public.adminUrl + '/songbook/' + songbook.id + '/edit',
+            },
+          ]"
+        />
+      </PageTopBar>
+      <div>
+        <div>
+          <template v-if="pending">
+            <!-- todo: loader -->
+          </template>
+          <template v-else-if="!songbook">
+            <!-- displayed only after client-side navigation (SSR throws) -->
+            <p>Zpěvník nebyl nalezen.</p>
+          </template>
+          <template v-else>
+            <SongList :filters="filters" :sort="sort" :seed="0" :per-page="50"></SongList>
+          </template>
+        </div>
+      </div>
+    </div>
+    <div class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50">
+      <img v-if="songbook?.songbook_img_url" :src="songbook.songbook_img_url" />
     </div>
   </div>
 </template>
@@ -49,6 +50,7 @@ const FETCH_SONGBOOK = gql`
       id
       name
       is_private
+      songbook_img_url
     }
   }
 `;

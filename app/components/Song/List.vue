@@ -118,12 +118,15 @@ export default {
       type: Boolean,
       default: false,
     },
+    perPage: {
+      type: Number,
+      default: 20,
+    },
   },
 
   data() {
     return {
       page: 1,
-      per_page: 20,
       enable_more: true,
       results_loaded: false,
       loading_bar: false,
@@ -193,7 +196,7 @@ export default {
         await this.$apollo.queries.song_lyrics_paginated.fetchMore({
           variables: {
             page: this.page,
-            per_page: this.per_page,
+            per_page: this.perPage,
           },
           updateQuery: (previousResult, { fetchMoreResult }) => {
             const { hasMorePages, mergedResult } = mergeFetchMoreResult(
@@ -221,7 +224,7 @@ export default {
         return {
           search_params: this.searchParams,
           page: 1,
-          per_page: this.per_page,
+          per_page: this.perPage,
         };
       },
       debounce: 1, // 1ms debounce probably makes the page switching faster
