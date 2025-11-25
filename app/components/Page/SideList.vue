@@ -1,8 +1,8 @@
 <template>
   <div
     class="hidden md:block sticky top-0 flex-grow-0 flex-shrink-0 w-2/5 xl:w-1/3 h-screen overflow-auto border-r border-primary-150"
-    v-if="listStore.active == 'search'"
-    v-show="$route.name == 'song'"
+    v-if="listStore.active"
+    v-show="$route.name == 'song' || $route.name == 'author'"
   >
     <BasicClickable :to="editQueryLink">
       <StickyContainer :onDashboard="false" class="min-h-[81px]">

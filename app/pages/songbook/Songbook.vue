@@ -34,7 +34,9 @@
         </div>
       </div>
     </div>
-    <div class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50">
+    <div
+      class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50"
+    >
       <img v-if="songbook?.songbook_img_url" :src="songbook.songbook_img_url" />
     </div>
   </div>
@@ -43,6 +45,8 @@
 <script setup>
 import { toGETParameters } from '~/components/Search/HistoryManager.vue';
 import gql from 'graphql-tag';
+import useListStore from '~/stores/list';
+const listStore = useListStore();
 
 const FETCH_SONGBOOK = gql`
   query ($id: ID!) {
@@ -91,5 +95,12 @@ const filterLink = computed(() => {
       sort: sort,
     }),
   };
+});
+
+onMounted(() => {
+  listStore.setActiveList('songbook');
+  listStore.searchString = '';
+  listStore.filters = filters.value;
+  listStore.sort = sort;
 });
 </script>
