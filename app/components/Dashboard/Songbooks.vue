@@ -4,7 +4,7 @@
       <BasicClickable
         v-for="songbook in topSongbooks"
         :key="songbook.id"
-        :to="'/zpevnik/' + songbook.id"
+        :to="{ name: 'songbook', params: { id: songbook.id } }"
         class="list-item"
       >
         <span class="list-icon">

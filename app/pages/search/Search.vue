@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="grid grid-cols-1"
-    :class="{ 'md:grid-cols-[60%_1fr] xl:grid-cols-[66%_1fr]': !init }"
-  >
+  <div class="grid grid-cols-1" :class="{ 'md:grid-cols-[60%_1fr] xl:grid-cols-[66%_1fr]': !init }">
     <div>
       <div v-if="init" class="custom-container md:mt-8">
         <Logo />
@@ -47,11 +44,7 @@
           @update:modelValue="init = false"
         ></InitFilters>
         <div class="text-center mt-1">
-          <BasicButton
-            @click="init = false"
-            icon-name="add"
-            class="text-primary -ml-3"
-          >
+          <BasicButton @click="init = false" icon-name="add" class="text-primary -ml-3">
             Zobrazit všechy písně
           </BasicButton>
         </div>
@@ -71,11 +64,7 @@
           :seed="seed"
           @query-loaded="queryLoaded"
         ></SongList>
-        <AuthorsList
-          v-else
-          :search-string="searchString"
-          @query-loaded="queryLoaded"
-        ></AuthorsList>
+        <AuthorsList v-else :search-string="searchString" @query-loaded="queryLoaded"></AuthorsList>
       </div>
     </div>
     <div
@@ -160,11 +149,7 @@ export default {
       return 'Evangelický zpěvník je projektem Českobratrské církve evangelické.';
     },
 
-    ...mapActions(useListStore, [
-      'randomizeSeed',
-      'resetBasicSearch',
-      'setActiveList',
-    ]),
+    ...mapActions(useListStore, ['randomizeSeed', 'resetBasicSearch', 'setActiveList']),
 
     queryLoaded() {
       this.updateHistoryState();
@@ -183,9 +168,7 @@ export default {
                 query: FETCH_SONGBOOK_SONG_ROUTE,
                 variables: {
                   number:
-                    this.$config.public.variation.filter.toUpperCase() +
-                    ' ' +
-                    this.searchString,
+                    this.$config.public.variation.filter.toUpperCase() + ' ' + this.searchString,
                 },
               }
             : {
@@ -199,8 +182,7 @@ export default {
             .query(query)
             .then((response) => {
               let result =
-                response.data.song_lyric_number ||
-                response.data.song_lyric_songbook_number;
+                response.data.song_lyric_number || response.data.song_lyric_songbook_number;
 
               if (result) {
                 this.$router
@@ -238,22 +220,12 @@ export default {
       init: 'showDashboard',
     }),
 
-    ...mapWritableState(useListStore, [
-      'searchString',
-      'filters',
-      'sort',
-      'seed',
-    ]),
+    ...mapWritableState(useListStore, ['searchString', 'filters', 'sort', 'seed']),
 
     // getter / setter for the SearchHistoryManager extending component
     historyStateObject: {
       get() {
-        const showSeed = !(
-          this.searchString ||
-          this.sort.by ||
-          this.showAuthors ||
-          this.init
-        );
+        const showSeed = !(this.searchString || this.sort.by || this.showAuthors || this.init);
 
         return {
           searchString: this.searchString,
@@ -281,16 +253,19 @@ export default {
     showAuthors(val) {
       this.resetBasicSearch();
     },
-    init(val) {
-      if (val) {
-        this.setActiveList();
-        this.resetBasicSearch();
-        this.showAuthors = false;
-      } else {
-        this.setActiveList('search');
-      }
+    init: {
+      handler(val) {
+        if (val) {
+          this.setActiveList();
+          this.resetBasicSearch();
+          this.showAuthors = false;
+        } else {
+          this.setActiveList('search');
+        }
 
-      this.updateHistoryState();
+        this.updateHistoryState();
+      },
+      immediate: true,
     },
     $route() {
       this.applyStateChange();
