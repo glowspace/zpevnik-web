@@ -18,10 +18,16 @@
           <!-- <tr v-if="displayHistory">
             <td>here we can display a list of last visited songs</td>
           </tr> -->
-          <template v-for="song_lyric in song_lyrics" :key="song_lyric.id">
+          <template v-for="(song_lyric, index) in song_lyrics" :key="song_lyric.id">
             <SongListItem
               :song_lyric="song_lyric"
               :songbook-id="preferred_songbook_id"
+              :context-state="
+                generateSideState(
+                  { searchString, filters: toRaw(filters), sort: toRaw(sort), seed },
+                  index
+                )
+              "
               :force-number="
                 preferred_songbook_id != $config.public.variation.songbook || sort == 2
               "
@@ -73,6 +79,8 @@ import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
 import tagsFilters from '../../pages/search/components/tagsFilters';
 import { SongListItemFragment } from './ListItem';
 import { isEmpty } from 'lodash-es';
+import { mapWritableState } from 'pinia';
+import useSideStore from '~/stores/side.js';
 
 // Query
 const FETCH_ITEMS = gql`
@@ -185,6 +193,10 @@ export default {
     selectedSongbooks() {
       return this.filters.songbooks;
     },
+
+    ...mapWritableState(useSideStore, {
+      sideList: 'list',
+    }),
   },
 
   methods: {
@@ -232,6 +244,14 @@ export default {
         this.$emit('query-loaded', null);
         this.enable_more = result.data.song_lyrics_paginated.paginatorInfo.hasMorePages;
         this.results_loaded = true;
+
+        // prepare side list
+        this.sideList = {
+          searchString: this.searchString,
+          filters: toRaw(this.filters),
+          sort: toRaw(this.sort),
+          seed: this.seed,
+        };
 
         // when the graphql result is cached, then currentPage is higher than 1 at component mounting
         // this needs to get mirrored in the local page property

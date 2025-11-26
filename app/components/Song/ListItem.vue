@@ -1,13 +1,10 @@
 <template>
   <tr :class="{ 'bg-surface-200': active }">
-    <td
-      v-if="isSearch"
-      class="hidden lg:table-cell text-gray text-right w-16 text-sm"
-    >
+    <td v-if="isSearch" class="hidden lg:table-cell text-gray text-right w-16 text-sm">
       <BasicClickable
         class="pl-7 p-3 whitespace-nowrap"
         tabindex="-1"
-        :to="song_lyric.public_route"
+        :to="{ path: song_lyric.public_route, state: contextState }"
       >
         {{ `${songbookPrefix}${songNumber}` }}
       </BasicClickable>
@@ -16,17 +13,10 @@
       <BasicClickable
         class="block p-3 lg:pl-3"
         :class="{ 'md:pl-7': isSearch }"
-        :to="song_lyric.public_route"
+        :to="{ path: song_lyric.public_route, state: contextState }"
       >
-        <span v-if="forceNumber" :class="{ 'lg:hidden': isSearch }"
-          >{{ songNumber }}.
-        </span>
-        <song-name
-          :song="song_lyric"
-          :songbook-id="songbookId"
-          multiline
-          :active="active"
-        />
+        <span v-if="forceNumber" :class="{ 'lg:hidden': isSearch }">{{ songNumber }}. </span>
+        <song-name :song="song_lyric" :songbook-id="songbookId" multiline :active="active" />
       </BasicClickable>
     </td>
     <td
@@ -34,17 +24,12 @@
       class="text-gray hidden"
       :class="[isSearch ? 'lg:table-cell' : 'sm:table-cell']"
     >
-      <span
-        v-for="(ap, authorIndex) in song_lyric.authors_pivot"
-        :key="authorIndex"
-      >
+      <span v-for="(ap, authorIndex) in song_lyric.authors_pivot" :key="authorIndex">
         <span v-if="authorIndex">, </span>
         <BasicLink
           :to="ap.pivot.author.public_route"
           :title="
-            song_lyric.type
-              ? authorshipTypes['LYRICS']
-              : authorshipTypes[ap.pivot.authorship_type]
+            song_lyric.type ? authorshipTypes['LYRICS'] : authorshipTypes[ap.pivot.authorship_type]
           "
         >
           {{ ap.pivot.author.name }}
@@ -62,7 +47,11 @@
       {{ song_lyric.lang != 'cs' ? song_lyric.lang.substring(0, 3) : '' }}
     </td>
     <td class="w-24" :class="{ 'md:pr-6': isSearch }" v-if="!hideIcons">
-      <BasicClickable class="icons" :to="song_lyric.public_route" tabindex="-1">
+      <BasicClickable
+        class="icons"
+        :to="{ path: song_lyric.public_route, state: contextState }"
+        tabindex="-1"
+      >
         <BasicIcon
           v-if="song_lyric.has_chords"
           name="fas fa-guitar"
@@ -104,6 +93,7 @@ const config = useRuntimeConfig();
 const props = defineProps({
   song_lyric: Object,
   songbookId: null,
+  contextState: Object,
   forceNumber: Boolean,
   hideIcons: Boolean,
   active: Boolean,
@@ -117,25 +107,18 @@ const songbookPivot = computed(() => {
       (r) => r.pivot.songbook.id == props.songbookId
     );
 
-    if (
-      record != null &&
-      record.pivot.number &&
-      record.pivot.songbook.shortcut
-    ) {
+    if (record != null && record.pivot.number && record.pivot.songbook.shortcut) {
       return record.pivot;
     }
   }
 });
 const songbookPrefix = computed(() =>
-  config.public.variation.songbook != props.songbookId &&
-  songbookPivot.value != null
+  config.public.variation.songbook != props.songbookId && songbookPivot.value != null
     ? `${songbookPivot.value.songbook.shortcut} `
     : ''
 );
 const songNumber = computed(() =>
-  songbookPivot.value != null
-    ? songbookPivot.value.number
-    : props.song_lyric.song_number
+  songbookPivot.value != null ? songbookPivot.value.number : props.song_lyric.song_number
 );
 </script>
 

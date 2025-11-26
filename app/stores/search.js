@@ -6,7 +6,6 @@ function randomInt(min, max) {
 
 export default defineStore('list', {
   state: () => ({
-    active: null,
     searchString: '',
     filters: {
       tags: {},
@@ -33,10 +32,6 @@ export default defineStore('list', {
         by: 0,
         desc: false,
       };
-    },
-
-    setActiveList(list = null) {
-      this.active = list;
     },
   }
 })

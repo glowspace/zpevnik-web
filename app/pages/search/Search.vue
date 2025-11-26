@@ -96,7 +96,7 @@ import StickyContainer from './components/StickyContainer';
 import SearchHistoryManager from '~/components/Search/HistoryManager';
 import { mapWritableState, mapActions } from 'pinia';
 import useHomepageStore from '~/stores/homepage.js';
-import useListStore from '~/stores/list.js';
+import useSearchStore from '~/stores/search.js';
 
 import gql from 'graphql-tag';
 
@@ -149,7 +149,7 @@ export default {
       return 'Evangelický zpěvník je projektem Českobratrské církve evangelické.';
     },
 
-    ...mapActions(useListStore, ['randomizeSeed', 'resetBasicSearch', 'setActiveList']),
+    ...mapActions(useSearchStore, ['randomizeSeed', 'resetBasicSearch', 'setActiveList']),
 
     queryLoaded() {
       this.updateHistoryState();
@@ -220,7 +220,7 @@ export default {
       init: 'showDashboard',
     }),
 
-    ...mapWritableState(useListStore, ['searchString', 'filters', 'sort', 'seed']),
+    ...mapWritableState(useSearchStore, ['searchString', 'filters', 'sort', 'seed']),
 
     // getter / setter for the SearchHistoryManager extending component
     historyStateObject: {
@@ -256,16 +256,12 @@ export default {
     init: {
       handler(val) {
         if (val) {
-          this.setActiveList();
           this.resetBasicSearch();
           this.showAuthors = false;
-        } else {
-          this.setActiveList('search');
         }
 
         this.updateHistoryState();
       },
-      immediate: true,
     },
     $route() {
       this.applyStateChange();

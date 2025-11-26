@@ -45,8 +45,6 @@
 <script setup>
 import { toGETParameters } from '~/components/Search/HistoryManager.vue';
 import gql from 'graphql-tag';
-import useListStore from '~/stores/list';
-const listStore = useListStore();
 
 const FETCH_SONGBOOK = gql`
   query ($id: ID!) {
@@ -95,12 +93,5 @@ const filterLink = computed(() => {
       sort: sort,
     }),
   };
-});
-
-onMounted(() => {
-  listStore.setActiveList('songbook');
-  listStore.searchString = '';
-  listStore.filters = filters.value;
-  listStore.sort = sort;
 });
 </script>
