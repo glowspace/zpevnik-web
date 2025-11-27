@@ -222,6 +222,17 @@ export default {
       }
     },
 
+    loadEnoughSongs() {
+      if (
+        this.sideStore.index != null &&
+        // make sure that the *next* song is loaded
+        this.sideStore.index + 1 >= this.song_lyrics.length &&
+        this.enable_more
+      ) {
+        this.loadMore();
+      }
+    },
+
     updateSideStoreOnResult() {
       // prepare side list (full -> side)
       this.sideStore.params = {
@@ -232,14 +243,8 @@ export default {
       };
       // update song list for browsing
       this.sideStore.songs = this.song_lyrics;
-
-      if (
-        this.sideStore.index != null &&
-        this.sideStore.index >= this.song_lyrics.length &&
-        this.enable_more
-      ) {
-        this.loadMore();
-      }
+      // make sure that active song is in the list
+      this.loadEnoughSongs();
     },
   },
 
@@ -294,6 +299,10 @@ export default {
       },
       deep: true,
       immediate: true,
+    },
+
+    'sideStore.index'() {
+      this.loadEnoughSongs();
     },
   },
 };

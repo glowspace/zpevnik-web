@@ -6,7 +6,7 @@
   >
     <BasicClickable :to="editQueryLink">
       <StickyContainer :onDashboard="false" class="min-h-[81px]">
-        <div class="input-box cursor-text">
+        <div class="input-box cursor-text overflow-hidden whitespace-nowrap">
           <div class="py-2 px-4">
             <span v-if="sideStore.params.searchString">{{ sideStore.params.searchString }}</span>
             <span v-else class="text-gray-400">Hledat píseň podle názvu, čísla nebo textu…</span>
