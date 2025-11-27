@@ -31,7 +31,9 @@
               :force-number="
                 preferred_songbook_id != $config.public.variation.songbook || sort == 2
               "
-              :is-search="!compact"
+              :is-search="!isSide"
+              :active="index == sideStore.index"
+              :scroll-into-view="isSide"
             />
           </template>
           <tr v-if="results_loaded">
@@ -79,7 +81,7 @@ import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
 import tagsFilters from '../../pages/search/components/tagsFilters';
 import { SongListItemFragment } from './ListItem';
 import { isEmpty } from 'lodash-es';
-import { mapWritableState } from 'pinia';
+import { mapStores } from 'pinia';
 import useSideStore from '~/stores/side.js';
 
 // Query
@@ -122,10 +124,7 @@ export default {
     // todo: refactor `sort.by` to String (or a kind of enum)
     sort: Object,
     seed: Number,
-    compact: {
-      type: Boolean,
-      default: false,
-    },
+    isSide: Boolean,
     perPage: {
       type: Number,
       default: 20,
@@ -194,9 +193,7 @@ export default {
       return this.filters.songbooks;
     },
 
-    ...mapWritableState(useSideStore, {
-      sideList: 'list',
-    }),
+    ...mapStores(useSideStore),
   },
 
   methods: {
@@ -224,6 +221,26 @@ export default {
         return e;
       }
     },
+
+    updateSideStoreOnResult() {
+      // prepare side list (full -> side)
+      this.sideStore.params = {
+        searchString: this.searchString,
+        filters: toRaw(this.filters),
+        sort: toRaw(this.sort),
+        seed: this.seed,
+      };
+      // update song list for browsing
+      this.sideStore.songs = this.song_lyrics;
+
+      if (
+        this.sideStore.index != null &&
+        this.sideStore.index >= this.song_lyrics.length &&
+        this.enable_more
+      ) {
+        this.loadMore();
+      }
+    },
   },
 
   // GraphQL client
@@ -245,20 +262,14 @@ export default {
         this.enable_more = result.data.song_lyrics_paginated.paginatorInfo.hasMorePages;
         this.results_loaded = true;
 
-        // prepare side list
-        this.sideList = {
-          searchString: this.searchString,
-          filters: toRaw(this.filters),
-          sort: toRaw(this.sort),
-          seed: this.seed,
-        };
-
         // when the graphql result is cached, then currentPage is higher than 1 at component mounting
         // this needs to get mirrored in the local page property
         // we also have to check if the user has fired loadMore event as otherwise he could accidentally fetch one page multiple times
         if (!this.loadedMore) {
           this.page = result.data.song_lyrics_paginated.paginatorInfo.currentPage;
         }
+
+        this.updateSideStoreOnResult();
       },
       watchLoading(isLoading, countModifier) {
         this.loading_bar = isLoading;

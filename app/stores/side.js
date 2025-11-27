@@ -14,7 +14,8 @@ export function getSideState(router) {
 export default defineStore('side', {
   state: () => ({
     // showSide: true,
-    list: null,
+    params: null,
     index: null,
+    songs: [],
   }),
 })

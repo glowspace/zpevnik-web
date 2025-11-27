@@ -1,34 +1,33 @@
 <template>
   <div
     class="hidden md:block sticky top-0 flex-grow-0 flex-shrink-0 w-2/5 xl:w-1/3 h-screen overflow-auto border-r border-primary-150"
-    v-if="sideStore.list != null"
+    v-if="sideStore.params != null"
     v-show="sideStore.index != null"
   >
     <BasicClickable :to="editQueryLink">
       <StickyContainer :onDashboard="false" class="min-h-[81px]">
         <div class="input-box cursor-text">
           <div class="py-2 px-4">
-            <span v-if="sideStore.list.searchString">{{ sideStore.list.searchString }}</span>
+            <span v-if="sideStore.params.searchString">{{ sideStore.params.searchString }}</span>
             <span v-else class="text-gray-400">Hledat píseň podle názvu, čísla nebo textu…</span>
           </div>
         </div>
         <Filters
           class="pt-0 pb-1 px-4 overflow-hidden whitespace-nowrap pointer-events-none empty:hidden"
           filter-row-variant="readonly"
-          v-model:filters="sideStore.list.filters"
+          v-model:filters="sideStore.params.filters"
           :show-authors="false"
-          v-model:sort="sideStore.list.sort"
-          :search-string="sideStore.list.searchString"
+          v-model:sort="sideStore.params.sort"
+          :search-string="sideStore.params.searchString"
         ></Filters>
       </StickyContainer>
     </BasicClickable>
-    <!-- todo: select current song, scroll there -->
     <SongList
-      :search-string="sideStore.list.searchString"
-      :filters="sideStore.list.filters"
-      :sort="sideStore.list.sort"
-      :seed="sideStore.list.seed"
-      compact
+      :search-string="sideStore.params.searchString"
+      :filters="sideStore.params.filters"
+      :sort="sideStore.params.sort"
+      :seed="sideStore.params.seed"
+      is-side
     ></SongList>
   </div>
 </template>
@@ -43,15 +42,15 @@ import Filters from '~/pages/search/components/Filters';
 import { toGETParameters } from '~/components/Search/HistoryManager.vue';
 
 const editQueryLink = computed(() => {
-  const showSeed = !(sideStore.list.searchString || sideStore.list.sort.by);
+  const showSeed = !(sideStore.params.searchString || sideStore.params.sort.by);
   return {
     path: '/',
     query: toGETParameters({
-      searchString: sideStore.list.searchString,
-      filters: sideStore.list.filters,
+      searchString: sideStore.params.searchString,
+      filters: sideStore.params.filters,
       showAuthors: false,
-      seed: showSeed ? sideStore.list.seed : null,
-      sort: sideStore.list.sort,
+      seed: showSeed ? sideStore.params.seed : null,
+      sort: sideStore.params.sort,
     }),
   };
 });
@@ -60,7 +59,7 @@ function fillSideStore() {
   const state = getSideState(router);
 
   if (state) {
-    sideStore.list = state.list;
+    sideStore.params = state.list;
     sideStore.index = state.index;
   } else {
     sideStore.index = null;

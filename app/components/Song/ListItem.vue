@@ -1,20 +1,12 @@
 <template>
-  <tr :class="{ 'bg-surface-200': active }">
+  <tr :class="{ active, 'scroll-m-56': scrollIntoView }" ref="row">
     <td v-if="isSearch" class="hidden lg:table-cell text-gray text-right w-16 text-sm">
-      <BasicClickable
-        class="pl-7 p-3 whitespace-nowrap"
-        tabindex="-1"
-        :to="{ path: song_lyric.public_route, state: contextState }"
-      >
-        {{ `${songbookPrefix}${songNumber}` }}
+      <BasicClickable class="pl-7 p-3 whitespace-nowrap" tabindex="-1" :to="linkObject">
+        {{ songbookPrefix + songNumber }}
       </BasicClickable>
     </td>
     <td>
-      <BasicClickable
-        class="block p-3 lg:pl-3"
-        :class="{ 'md:pl-7': isSearch }"
-        :to="{ path: song_lyric.public_route, state: contextState }"
-      >
+      <BasicClickable class="block p-3 lg:pl-3" :class="{ 'md:pl-7': isSearch }" :to="linkObject">
         <span v-if="forceNumber" :class="{ 'lg:hidden': isSearch }">{{ songNumber }}. </span>
         <song-name :song="song_lyric" :songbook-id="songbookId" multiline :active="active" />
       </BasicClickable>
@@ -47,11 +39,7 @@
       {{ song_lyric.lang != 'cs' ? song_lyric.lang.substring(0, 3) : '' }}
     </td>
     <td class="w-24" :class="{ 'md:pr-6': isSearch }" v-if="!hideIcons">
-      <BasicClickable
-        class="icons"
-        :to="{ path: song_lyric.public_route, state: contextState }"
-        tabindex="-1"
-      >
+      <BasicClickable class="icons" :to="linkObject" tabindex="-1">
         <BasicIcon
           v-if="song_lyric.has_chords"
           name="fas fa-guitar"
@@ -99,7 +87,33 @@ const props = defineProps({
   active: Boolean,
   isSearch: Boolean,
   allowAuthors: Boolean,
+  scrollIntoView: Boolean,
 });
+
+const rowElement = useTemplateRef('row');
+
+function activeIntoView() {
+  if (props.scrollIntoView && props.active && !rowElement.value.contains(document.activeElement)) {
+    rowElement.value.scrollIntoView();
+  }
+}
+
+watch(
+  () => props.active,
+  async (val) => {
+    await nextTick();
+    activeIntoView();
+  }
+);
+
+onMounted(() => {
+  activeIntoView();
+});
+
+const linkObject = computed(() => ({
+  path: props.song_lyric.public_route,
+  state: props.contextState,
+}));
 const authorshipTypes = { GENERIC: '', LYRICS: 'text', MUSIC: 'hudba' };
 const songbookPivot = computed(() => {
   if (props.songbookId != null && props.song_lyric.songbook_records != null) {
@@ -165,7 +179,8 @@ tr:focus-within {
   @apply bg-surface-50;
 }
 
-tr:active {
+tr:active,
+tr.active {
   @apply bg-surface-200;
 }
 
