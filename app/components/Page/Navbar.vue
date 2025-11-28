@@ -1,12 +1,12 @@
 <template>
   <div class="menu-wrapper">
-    <div class="menu">
+    <div class="menu-part">
       <BasicClickable
         to="/"
         :class="[
           'hidden md:flex justify-center mt-2 mb-10',
           {
-            invisible: $route.name == 'index' && store.showDashboard,
+            invisible: $route.name == 'index' && homepageStore.showDashboard,
           },
         ]"
       >
@@ -15,7 +15,7 @@
       <BasicClickable to="/" class="link group">
         <div
           class="icon-wrapper"
-          :class="{ active: $route.name == 'index' && store.showDashboard }"
+          :class="{ active: $route.name == 'index' && homepageStore.showDashboard }"
         >
           <BasicIcon name="home" />
         </div>
@@ -24,7 +24,7 @@
       <BasicClickable to="/?hledat=ano" class="link group">
         <div
           class="icon-wrapper"
-          :class="{ active: $route.name == 'index' && !store.showDashboard }"
+          :class="{ active: $route.name == 'index' && !homepageStore.showDashboard }"
         >
           <BasicIcon name="search" />
         </div>
@@ -41,20 +41,33 @@
         <p class="label">{{ item.label }}</p>
       </BasicClickable>
     </div>
+    <div class="menu-part menu-part-desktop mb-2">
+      <BasicButton
+        :icon-name="sideStore.show ? 'menu_open' : 'menu'"
+        icon-only
+        v-if="sideStore.params != null && sideStore.index != null"
+        @click="sideStore.show = !sideStore.show"
+      />
+      <BasicButton icon-name="dark_mode" icon-only />
+    </div>
   </div>
 </template>
 
 <style lang="postcss" scoped>
 .menu-wrapper {
-  @apply w-full text-sm fixed bottom-0 flex-col items-center
+  @apply w-full text-sm fixed bottom-0 flex-col items-center justify-between
   shadow md:shadow-none md:border-r border-primary-150
   bg-surface-200 dark:bg-surfacedark-200
   md:left-0 md:top-0 md:w-auto md:h-full md:py-4 md:overflow-y-auto md:overflow-x-hidden;
 }
 
-.menu {
+.menu-part {
   @apply flex flex-row justify-center gap-2 w-full
   md:flex-col md:w-auto md:gap-5;
+}
+
+.menu-part-desktop {
+  @apply hidden md:flex gap-4;
 }
 
 .link {
@@ -81,5 +94,7 @@
 
 <script setup>
 import useHomepageStore from '~/stores/homepage';
-const store = useHomepageStore();
+import useSideStore from '~/stores/side';
+const homepageStore = useHomepageStore();
+const sideStore = useSideStore();
 </script>

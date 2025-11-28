@@ -2,7 +2,7 @@
   <div
     class="hidden md:block sticky top-0 flex-grow-0 flex-shrink-0 w-2/5 xl:w-1/3 h-screen overflow-auto border-r border-primary-150"
     v-if="sideStore.params != null"
-    v-show="sideStore.index != null"
+    v-show="sideStore.index != null && sideStore.show"
   >
     <BasicClickable :to="editQueryLink">
       <StickyContainer :onDashboard="false" class="min-h-[81px]">
