@@ -1,20 +1,16 @@
 <template>
-  <div class="grid grid-cols-1" :class="{ 'md:grid-cols-[60%_1fr] xl:grid-cols-[66%_1fr]': !init }">
+  <div class="grid grid-cols-1 md:grid-cols-[60%_1fr] xl:grid-cols-[66%_1fr]">
     <div>
-      <div v-if="init" class="custom-container md:mt-8">
-        <Logo />
-      </div>
-      <StickyContainer :onDashboard="init">
-        <div :class="{ 'custom-container': init, 'md:mt-4 lg:mx-5': !init }">
+      <PageStickyContainer>
+        <div class="md:mt-4 lg:mx-5">
           <SearchBox
             v-model="searchString"
-            :on-dashboard="init"
+            :on-dashboard="false"
             :search-songs="!showAuthors"
             :song-loading="songLoading"
             @enter="inputEnter"
-            @clickBox="init = false"
           />
-          <FilterRow v-if="!init">
+          <FilterRow>
             <template #row>
               <Filters
                 filter-row-variant="editable"
@@ -36,26 +32,8 @@
             ></Filters>
           </FilterRow>
         </div>
-      </StickyContainer>
-      <div class="custom-container" v-if="init">
-        <InitFilters
-          v-if="!$config.public.variation.hideTags"
-          v-model="filters.tags"
-          @update:modelValue="init = false"
-        ></InitFilters>
-        <div class="text-center mt-1">
-          <BasicButton @click="init = false" icon-name="add" class="text-primary -ml-3">
-            Zobrazit všechy písně
-          </BasicButton>
-        </div>
-      </div>
-      <div
-        v-if="init"
-        class="p-5 mb-5 sm:grid sm:grid-cols-2 gap-x-7 gap-y-5 space-y-4 sm:space-y-0 max-w-[1000px] mx-auto"
-      >
-        <Dashboard />
-      </div>
-      <div v-if="urlLoaded" v-show="!init">
+      </PageStickyContainer>
+      <div v-if="urlLoaded">
         <SongList
           v-if="!showAuthors"
           :search-string="searchString"
@@ -68,7 +46,6 @@
       </div>
     </div>
     <div
-      v-if="!init"
       class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50"
     >
       <div>
@@ -89,13 +66,9 @@
 import FilterRow from './components/FilterRow';
 import AuthorsList from './components/AuthorsList';
 import Filters from './components/Filters';
-import InitFilters from './components/InitFilters';
-import Logo from './components/Logo';
 import SearchBox from './components/SearchBox';
-import StickyContainer from './components/StickyContainer';
 import SearchHistoryManager from '~/components/Search/HistoryManager';
 import { mapWritableState, mapActions } from 'pinia';
-import useHomepageStore from '~/stores/homepage.js';
 import useSearchStore from '~/stores/search.js';
 
 import gql from 'graphql-tag';
@@ -125,7 +98,10 @@ export default {
   extends: SearchHistoryManager,
 
   head() {
-    return generateHead(this.getTitle(), this.getDescription());
+    return generateHead(
+      'Hledání' + this.$config.public.titleSeparator + this.$config.public.variation.title,
+      this.$config.public.variation.description
+    );
   },
 
   data() {
@@ -137,18 +113,6 @@ export default {
   },
 
   methods: {
-    getTitle() {
-      return (
-        this.$config.public.variation.title +
-        this.$config.public.titleSeparator +
-        'chytrý křesťanský zpěvník'
-      );
-    },
-
-    getDescription() {
-      return 'Evangelický zpěvník je projektem Českobratrské církve evangelické.';
-    },
-
     ...mapActions(useSearchStore, ['randomizeSeed', 'resetBasicSearch', 'setActiveList']),
 
     queryLoaded() {
@@ -206,26 +170,19 @@ export default {
   },
 
   components: {
-    Logo,
     AuthorsList,
     Filters,
-    InitFilters,
     SearchBox,
     FilterRow,
-    StickyContainer,
   },
 
   computed: {
-    ...mapWritableState(useHomepageStore, {
-      init: 'showDashboard',
-    }),
-
     ...mapWritableState(useSearchStore, ['searchString', 'filters', 'sort', 'seed']),
 
     // getter / setter for the SearchHistoryManager extending component
     historyStateObject: {
       get() {
-        const showSeed = !(this.searchString || this.sort.by || this.showAuthors || this.init);
+        const showSeed = !(this.searchString || this.sort.by || this.showAuthors);
 
         return {
           searchString: this.searchString,
@@ -252,16 +209,6 @@ export default {
   watch: {
     showAuthors(val) {
       this.resetBasicSearch();
-    },
-    init: {
-      handler(val) {
-        if (val) {
-          this.resetBasicSearch();
-          this.showAuthors = false;
-        }
-
-        this.updateHistoryState();
-      },
     },
     $route() {
       this.applyStateChange();

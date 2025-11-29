@@ -54,6 +54,11 @@ export default defineNuxtConfig({
           {
             name: 'index',
             path: '/',
+            file: '~/pages/index/Index.vue',
+          },
+          {
+            name: 'search',
+            path: '/hledani',
             file: '~/pages/search/Search.vue',
           },
           {

@@ -84,7 +84,7 @@ const sort = { by: 2, desc: false };
 
 const filterLink = computed(() => {
   return {
-    path: '/',
+    name: 'search',
     query: toGETParameters({
       searchString: '',
       filters: filters.value,

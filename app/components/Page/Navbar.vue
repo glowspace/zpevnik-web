@@ -3,29 +3,18 @@
     <div class="menu-part">
       <BasicClickable
         to="/"
-        :class="[
-          'hidden md:flex justify-center mt-2 mb-10',
-          {
-            invisible: $route.name == 'index' && homepageStore.showDashboard,
-          },
-        ]"
+        :class="['hidden md:flex justify-center mt-2 mb-10', { invisible: $route.name == 'index' }]"
       >
         <img src="/img/logo.svg" class="h-8" />
       </BasicClickable>
-      <BasicClickable to="/" class="link group">
-        <div
-          class="icon-wrapper"
-          :class="{ active: $route.name == 'index' && homepageStore.showDashboard }"
-        >
+      <BasicClickable :to="{ name: 'index' }" class="link group">
+        <div class="icon-wrapper" :class="{ active: $route.name == 'index' }">
           <BasicIcon name="home" />
         </div>
         <p class="label">Nástěnka</p>
       </BasicClickable>
-      <BasicClickable to="/?hledat=ano" class="link group">
-        <div
-          class="icon-wrapper"
-          :class="{ active: $route.name == 'index' && !homepageStore.showDashboard }"
-        >
+      <BasicClickable :to="{ name: 'search' }" class="link group">
+        <div class="icon-wrapper" :class="{ active: $route.name == 'search' }">
           <BasicIcon name="search" />
         </div>
         <p class="label">Hledání</p>
@@ -52,6 +41,11 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import useSideStore from '~/stores/side';
+const sideStore = useSideStore();
+</script>
 
 <style lang="postcss" scoped>
 .menu-wrapper {
@@ -91,10 +85,3 @@
   }
 }
 </style>
-
-<script setup>
-import useHomepageStore from '~/stores/homepage';
-import useSideStore from '~/stores/side';
-const homepageStore = useHomepageStore();
-const sideStore = useSideStore();
-</script>

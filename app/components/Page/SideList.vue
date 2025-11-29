@@ -5,7 +5,7 @@
     v-show="sideStore.index != null && sideStore.show"
   >
     <BasicClickable :to="editQueryLink">
-      <StickyContainer :onDashboard="false" class="min-h-[81px]">
+      <PageStickyContainer class="min-h-[81px]">
         <div class="input-box cursor-text overflow-hidden whitespace-nowrap">
           <div class="py-2 px-4">
             <span v-if="sideStore.params.searchString">{{ sideStore.params.searchString }}</span>
@@ -20,7 +20,7 @@
           v-model:sort="sideStore.params.sort"
           :search-string="sideStore.params.searchString"
         ></Filters>
-      </StickyContainer>
+      </PageStickyContainer>
     </BasicClickable>
     <SongList
       :search-string="sideStore.params.searchString"
@@ -37,14 +37,13 @@ import useSideStore from '~/stores/side';
 const sideStore = useSideStore();
 const route = useRoute();
 const router = useRouter();
-import StickyContainer from '~/pages/search/components/StickyContainer';
 import Filters from '~/pages/search/components/Filters';
 import { toGETParameters } from '~/components/Search/HistoryManager.vue';
 
 const editQueryLink = computed(() => {
   const showSeed = !(sideStore.params.searchString || sideStore.params.sort.by);
   return {
-    path: '/',
+    name: 'search',
     query: toGETParameters({
       searchString: sideStore.params.searchString,
       filters: sideStore.params.filters,

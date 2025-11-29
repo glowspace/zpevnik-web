@@ -10,7 +10,7 @@
       </span>
     </p>
     <div class="-m-1">
-      <BasicButton icon-name="search" type="primary" class="m-1" to="/?hledat=ano">
+      <BasicButton icon-name="search" type="primary" class="m-1" :to="{ name: 'search' }">
         Hledat
       </BasicButton>
       <BasicButton
