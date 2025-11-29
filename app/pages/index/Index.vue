@@ -22,7 +22,12 @@
           @update:modelValue="init = false"
         ></InitFilters> -->
       <div class="text-center mt-1">
-        <BasicButton :to="{ name: 'search' }" icon-name="add" class="text-primary -ml-3">
+        <BasicButton
+          :to="{ name: 'search' }"
+          @click="searchStore.resetBasicSearch"
+          icon-name="add"
+          class="text-primary -ml-3"
+        >
           Zobrazit všechy písně
         </BasicButton>
       </div>
@@ -36,7 +41,10 @@
 </template>
 
 <script setup>
+import useSearchStore from '~/stores/search';
+
 const { variation, titleSeparator } = useRuntimeConfig()?.public;
+const searchStore = useSearchStore();
 
 useHead(
   generateHead(
