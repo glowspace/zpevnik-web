@@ -2,7 +2,6 @@
   <div>
     <PageTopBar title="Zpěvníky" full-width class="lg:px-4">
       <Kebab
-        v-if="songbook"
         :items="[
           {
             label: 'Nahlásit',
@@ -21,17 +20,21 @@
       <template v-if="pending">
         <!-- todo: loader -->
       </template>
-      <div v-else-if="songbooks" class="grid grid-cols-4">
+      <div
+        v-else-if="songbooks"
+        class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 my-8 mx-8"
+      >
         <template v-for="songbook in songbooks">
-          <BasicClickable
+          <BasicLink
             v-if="!songbook.is_private"
             :to="{ name: 'songbook', params: { id: songbook.id } }"
           >
-            <div class="aspect-video w-full overflow-hidden">
+            <div class="aspect-[4/3] w-full overflow-hidden rounded-lg">
               <img v-if="songbook.songbook_img_url" :src="songbook.songbook_img_url" />
+              <div v-else class="fallback-image" />
             </div>
-            <div>{{ songbook.name }}</div>
-          </BasicClickable>
+            <div class="mt-4">{{ songbook.name }}</div>
+          </BasicLink>
         </template>
       </div>
     </div>
@@ -65,3 +68,11 @@ useHead(
   )
 );
 </script>
+
+<style lang="postcss" scoped>
+.fallback-image {
+  @apply h-full;
+  background: url('/img/logo.svg') center no-repeat #eee;
+  background-size: 50%;
+}
+</style>
