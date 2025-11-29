@@ -1,6 +1,6 @@
 <template>
   <div v-if="topSongbooks && topSongbooks.length">
-    <DashboardCard title="Zpěvníky">
+    <DashboardCard title="Zpěvníky" :more-link="{ name: 'songbooks' }">
       <BasicClickable
         v-for="songbook in topSongbooks"
         :key="songbook.id"
@@ -11,6 +11,7 @@
           <div class="w-5 h-5 rounded" :style="{ background: songbook.color }"></div>
         </span>
         <span>{{ songbook.name }}</span>
+        <span class="list-note">{{ songbook.shortcut }}</span>
       </BasicClickable>
     </DashboardCard>
   </div>
@@ -26,6 +27,7 @@ const FETCH_SONGBOOKS = gql`
       name
       songs_count
       color
+      shortcut
     }
   }
 `;

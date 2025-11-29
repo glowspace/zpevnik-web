@@ -11,8 +11,8 @@ export function getSideState(router) {
   return router.options.history.state.zpsSide;
 }
 
-function generateLinkObject(rawParams, songs, linkIndex) {
-  if (linkIndex >= 0 && linkIndex < songs.length) {
+function generateLinkObject(rawParams, songs, currentIndex, linkIndex) {
+  if (currentIndex != null && linkIndex >= 0 && linkIndex < songs.length) {
     return {
       path: songs[linkIndex].public_route,
       state: generateSideState(rawParams, linkIndex),
@@ -34,7 +34,7 @@ export default defineStore('side', {
   }),
   getters: {
     // previous/next button links
-    previous: (state) => generateLinkObject(toRaw(state.params), state.songs, state.index - 1),
-    next: (state) => generateLinkObject(toRaw(state.params), state.songs, state.index + 1),
+    previous: (state) => generateLinkObject(toRaw(state.params), state.songs, state.index, state.index - 1),
+    next: (state) => generateLinkObject(toRaw(state.params), state.songs, state.index, state.index + 1),
   },
 })

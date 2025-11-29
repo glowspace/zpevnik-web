@@ -24,7 +24,7 @@
       </template>
       <template v-else-if="!author">
         <!-- displayed only after client-side navigation (SSR throws) -->
-        <p>Autor nebyl nalezen.</p>
+        <ErrorCard :status-code="404" />
       </template>
       <template v-else>
         <h1 class="mb-3 text-2xl font-semibold">{{ author.name }}</h1>
@@ -151,7 +151,7 @@ const description = computed(() => {
   }
 
   const type = author.value?.type ?? 0;
-  return `Písně i ${thisStrings[type]} obsahuje ${variation.name}.`;
+  return `Písně i ${thisStrings[type]} obsahuje ${variation.name}`;
 });
 useHead(generateHead(title, description));
 </script>

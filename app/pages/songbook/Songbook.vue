@@ -26,7 +26,7 @@
           </template>
           <template v-else-if="!songbook">
             <!-- displayed only after client-side navigation (SSR throws) -->
-            <p>Zpěvník nebyl nalezen.</p>
+            <ErrorCard :status-code="404" />
           </template>
           <template v-else>
             <SongList :filters="filters" :sort="sort" :seed="0" :per-page="50"></SongList>
@@ -72,7 +72,7 @@ const { variation, titleSeparator } = useRuntimeConfig()?.public;
 const title = computed(
   () => (songbook.value?.name ?? 'Zpěvník') + titleSeparator + variation.title
 );
-useHead(generateHead(title, 'I tento zpěvník u nás najdete.'));
+useHead(generateHead(title, 'I tento zpěvník u nás najdete'));
 
 // other
 const filters = computed(() => {

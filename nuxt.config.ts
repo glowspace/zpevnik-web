@@ -71,6 +71,11 @@ export default defineNuxtConfig({
             path: '/zpevnik/:id',
             file: '~/pages/songbook/Songbook.vue',
           },
+          {
+            name: 'songbooks',
+            path: '/zpevniky',
+            file: '~/pages/songbook/SongbooksList.vue',
+          },
         ]
       );
     },

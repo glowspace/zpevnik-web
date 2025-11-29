@@ -12,6 +12,9 @@
           <BasicIcon :name="item.fa_icon" type="fa" />
         </span>
         <span>{{ item.text }}</span>
+        <span class="list-icon" v-if="item.link_type == 'NUXTLINK'">
+          <BasicIcon name="arrow_right_alt" />
+        </span>
       </UniversalLink>
     </DashboardCard>
   </div>

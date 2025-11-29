@@ -2,30 +2,7 @@
   <NuxtLayout>
     <PageTopBar :title="'Chyba ' + error.statusCode" is-h1 />
     <div class="custom-container">
-      <div class="shadow bg-surface-100 mx-4 my-12 px-6 py-4 inline-block">
-        <p class="mb-3">
-          <span v-if="error.statusCode === 404">
-            Stránka nebyla nalezena. <br />Zkuste použít vyhledávání.
-          </span>
-          <span v-else>
-            Ajajaj, někde se stala chyba.<br />
-            Zkuste použít vyhledávání.
-          </span>
-        </p>
-        <div class="-m-1">
-          <BasicButton icon-name="search" type="primary" class="m-1" to="/?hledat=ano">
-            Hledat
-          </BasicButton>
-          <BasicButton
-            icon-name="warning"
-            type="outlined"
-            class="m-1"
-            :href="getReportLink(null, error.statusCode)"
-          >
-            Nahlásit
-          </BasicButton>
-        </div>
-      </div>
+      <ErrorCard :status-code="error.statusCode" />
     </div>
   </NuxtLayout>
 </template>

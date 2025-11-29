@@ -38,7 +38,7 @@
 useHead(
   generateHead(
     'O zpěvníku ProScholy.cz',
-    'Jak vzniká největší český křesťanský online zpěvník a kdo ho tvoří? Tady to zjistíte.'
+    'Jak vzniká největší český křesťanský online zpěvník a kdo ho tvoří'
   )
 );
 </script>
