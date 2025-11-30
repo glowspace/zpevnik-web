@@ -9,35 +9,33 @@ export default {
   },
 
   methods: {
-    updateHistoryState(push = true, force) {
-      let oldParams = this.$route.query;
+    updateHistoryState(replace = false) {
       let newParams = toGETParameters(this.historyStateObject);
-      this.internalParams = newParams;
 
-      if (isEqual(oldParams, newParams) && !force) {
+      if (isEqual(this.internalParams, newParams)) {
         return;
       }
 
-      const update = push ? this.$router.push : this.$router.replace;
-      update({
+      // synchronous internal update
+      this.internalParams = newParams;
+      // asynchronous push/replace to browser
+      this.$router.push({
         name: 'search',
-        query: toGETParameters(this.historyStateObject),
-      }).catch((err) => {
-        // empty catch prevents errors when navigating to the current route
+        query: newParams,
+        replace,
       });
     },
 
-    applyStateChange() {
-      let GETparameters = this.$route.query;
-
+    applyStateChange(GETparameters) {
       if (!isEqual(this.internalParams, GETparameters)) {
         // path was really changed by the user (not from updateHistoryState)
         this.historyStateObject = fromGETParameters(GETparameters);
+        this.internalParams = GETparameters;
       }
 
       if (hasInvalidGETParameters(GETparameters) || isEmpty(GETparameters)) {
         // we want to normalize the GET parameters
-        this.updateHistoryState(false);
+        this.updateHistoryState(true);
       }
     },
   },

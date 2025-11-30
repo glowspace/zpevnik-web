@@ -165,7 +165,7 @@ export default {
   },
 
   mounted() {
-    this.applyStateChange();
+    this.applyStateChange(this.$route.query);
     this.urlLoaded = true;
   },
 
@@ -211,7 +211,7 @@ export default {
       this.resetBasicSearch();
     },
     $route() {
-      this.applyStateChange();
+      this.applyStateChange(this.$route.query);
       // we intercept route changes this way, because:
       // - beforeRouteUpdate fires before route change
       // - window.onpopstate does not fire for nuxt-links
