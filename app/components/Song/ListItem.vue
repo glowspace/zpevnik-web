@@ -1,5 +1,5 @@
 <template>
-  <tr :class="{ active, 'scroll-m-56': scrollIntoView }" ref="row">
+  <tr :class="{ active, 'scroll-m-56': scrollIntoView }" ref="row" @click="rowClicked">
     <td v-if="display.number" class="hidden lg:table-cell text-gray text-right w-16 text-sm">
       <BasicClickable class="pl-7 p-3 whitespace-nowrap" tabindex="-1" :to="linkObject">
         {{ songbookPrefix + songNumber }}
@@ -104,10 +104,17 @@ const props = defineProps({
 });
 
 const rowElement = useTemplateRef('row');
+const router = useRouter();
 
 function activeIntoView() {
   if (props.scrollIntoView && props.active && !rowElement.value.contains(document.activeElement)) {
     rowElement.value.scrollIntoView();
+  }
+}
+
+function rowClicked(event) {
+  if (event.target.tagName == 'TD') {
+    router.push(linkObject.value);
   }
 }
 
