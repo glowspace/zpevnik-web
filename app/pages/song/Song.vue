@@ -2,7 +2,6 @@
   <div class="flex flex-col min-h-screen items-stretch">
     <PageTopBar :title="topBarTitle">
       <Kebab
-        v-if="song_lyric"
         :items="[
           {
             label: 'Nahlásit',
@@ -12,7 +11,7 @@
           {
             label: 'Upravit',
             icon: 'edit',
-            href: $config.public.adminUrl + '/song/' + song_lyric.id + '/edit',
+            href: !song_lyric ? '' : $config.public.adminUrl + '/song/' + song_lyric.id + '/edit',
           },
           {
             label: 'Tisk',

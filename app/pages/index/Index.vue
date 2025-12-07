@@ -5,22 +5,17 @@
     </div>
     <PageStickyContainer :on-dashboard="true">
       <div class="custom-container">
-        <!-- <SearchBox
-          v-model="searchString"
-          :on-dashboard="init"
-          :search-songs="!showAuthors"
-          :song-loading="songLoading"
-          @enter="inputEnter"
-          @clickBox="init = false"
-        /> -->
+        <BasicClickable
+          :to="{ name: 'search' }"
+          @click="searchStore.resetBasicSearch"
+          class="cursor-default"
+        >
+          <SearchInputBox fake />
+        </BasicClickable>
       </div>
     </PageStickyContainer>
     <div class="custom-container">
-      <!-- <InitFilters
-          v-if="!$config.public.variation.hideTags"
-          v-model="filters.tags"
-          @update:modelValue="init = false"
-        ></InitFilters> -->
+      <DashboardInitFilters v-if="!$config.public.variation.hideTags"></DashboardInitFilters>
       <div class="text-center mt-1">
         <BasicButton
           :to="{ name: 'search' }"
@@ -45,6 +40,8 @@ import useSearchStore from '~/stores/search';
 
 const { variation, titleSeparator } = useRuntimeConfig()?.public;
 const searchStore = useSearchStore();
+const route = useRoute();
+const router = useRouter();
 
 useHead(
   generateHead(
@@ -52,4 +49,20 @@ useHead(
     variation.description
   )
 );
+
+const legacySearchParams = [
+  'vyhledavani',
+  'stitky',
+  'jazyky',
+  'zpevniky',
+  'autori',
+  'razeni',
+  'nahoda',
+];
+
+onMounted(() => {
+  if (legacySearchParams.some((param) => param in route.query)) {
+    router.replace({ name: 'search', query: route.query });
+  }
+});
 </script>

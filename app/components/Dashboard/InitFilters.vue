@@ -1,37 +1,28 @@
 <template>
-  <div :class="[{ 'opacity-100': randomTags.length }, 'flex flex-row flex-wrap items-center opacity-0 h-10 overflow-hidden ml-6 mr-4']">
-    <BasicButton
-      icon-name="filter_alt"
-      icon-fill
-      icon-only
-      compact
-      @click="$emit('update:modelValue', {})"
-    />
-    <client-only>
-      <BasicChip
-        v-for="tag in randomTags"
-        :key="tag.id"
-        @click="selectTag(tag)"
-        >{{ tag.name }}</BasicChip
-      >
-    </client-only>
+  <div
+    :class="[
+      { 'opacity-100': randomTags.length },
+      'flex flex-row flex-wrap items-center opacity-0 h-10 overflow-hidden ml-6 mr-4',
+    ]"
+  >
+    <BasicButton :to="{ name: 'search' }" icon-name="filter_alt" icon-fill icon-only compact />
+    <ClientOnly>
+      <BasicChip v-for="tag in randomTags" :key="tag.id" :to="getTagUrl(tag.id)">{{
+        tag.name
+      }}</BasicChip>
+    </ClientOnly>
   </div>
 </template>
 
 <script>
-import tagsFilters from './tagsFilters';
+import tagsFilters from '~/components/Search/tagsFilters';
+import { toGETParameters } from '~/components/Search/HistoryManager.vue';
+import { emptyFilters } from '~/stores/search';
 
 const requiredAmountOfSongs = 10;
+const sort = { by: 2, desc: false };
 
 export default {
-  props: ['modelValue'],
-
-  data() {
-    return {
-      selected_tags: {},
-    };
-  },
-
   apollo: {
     $prefetch: false,
     ...tagsFilters,
@@ -59,19 +50,21 @@ export default {
   },
 
   methods: {
-    selectTag(tag) {
-      this.selected_tags[tag.id] = true;
-
-      // notify the parent that sth has changed
-      this.$emit('update:modelValue', this.selected_tags);
-    },
-
     shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
       }
       return array;
+    },
+
+    getTagUrl(id) {
+      var filters = emptyFilters();
+      filters.tags[id] = true;
+      return {
+        name: 'search',
+        query: toGETParameters({ filters }),
+      };
     },
   },
 };

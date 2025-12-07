@@ -78,7 +78,7 @@ import buildElasticSearchParams, {
   getSelectedTagsDcnf,
 } from '~/components/Search/buildElasticSearchParams';
 import mergeFetchMoreResult from '~/components/Search/mergeFetchMoreResult';
-import tagsFilters from '../../pages/search/components/tagsFilters';
+import tagsFilters from '~/components/Search/tagsFilters';
 import { SongListItemFragment } from './ListItem';
 import { isEmpty } from 'lodash-es';
 import { mapStores } from 'pinia';

@@ -3,11 +3,10 @@
     <div>
       <PageStickyContainer>
         <div class="md:mt-4 lg:mx-5">
-          <SearchBox
+          <SearchInputBox
             v-model="searchString"
-            :on-dashboard="false"
-            :search-songs="!showAuthors"
-            :song-loading="songLoading"
+            :authors="showAuthors"
+            :loading="songLoading"
             @enter="inputEnter"
           />
           <FilterRow>
@@ -66,7 +65,6 @@
 import FilterRow from './components/FilterRow';
 import AuthorsList from './components/AuthorsList';
 import Filters from './components/Filters';
-import SearchBox from './components/SearchBox';
 import SearchHistoryManager from '~/components/Search/HistoryManager';
 import { mapWritableState, mapActions } from 'pinia';
 import useSearchStore from '~/stores/search.js';
@@ -172,7 +170,6 @@ export default {
   components: {
     AuthorsList,
     Filters,
-    SearchBox,
     FilterRow,
   },
 

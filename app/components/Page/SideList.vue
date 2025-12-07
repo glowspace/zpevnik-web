@@ -6,12 +6,7 @@
   >
     <BasicClickable :to="editQueryLink">
       <PageStickyContainer class="min-h-[81px]">
-        <div class="input-box cursor-text overflow-hidden whitespace-nowrap">
-          <div class="py-2 px-4">
-            <span v-if="sideStore.params.searchString">{{ sideStore.params.searchString }}</span>
-            <span v-else class="text-gray-400">Hledat píseň podle názvu, čísla nebo textu…</span>
-          </div>
-        </div>
+        <SearchInputBox fake :modelValue="sideStore.params.searchString" />
         <Filters
           class="pt-0 pb-1 px-4 overflow-hidden whitespace-nowrap pointer-events-none empty:hidden"
           filter-row-variant="readonly"
@@ -47,7 +42,6 @@ const editQueryLink = computed(() => {
     query: toGETParameters({
       searchString: sideStore.params.searchString,
       filters: sideStore.params.filters,
-      showAuthors: false,
       seed: showSeed ? sideStore.params.seed : null,
       sort: sideStore.params.sort,
     }),

@@ -4,7 +4,6 @@
       <PageTopBar :title="songbook?.name ?? 'načítám…'" full-width class="lg:px-4">
         <BasicButton icon-name="filter_alt" icon-only icon-fill :to="filterLink" />
         <Kebab
-          v-if="songbook"
           :items="[
             {
               label: 'Nahlásit',
@@ -14,7 +13,7 @@
             {
               label: 'Upravit',
               icon: 'edit',
-              href: $config.public.adminUrl + '/songbook/' + songbook.id + '/edit',
+              href: !songbook ? '' : $config.public.adminUrl + '/songbook/' + songbook.id + '/edit',
             },
           ]"
         />
@@ -44,6 +43,7 @@
 
 <script setup>
 import { toGETParameters } from '~/components/Search/HistoryManager.vue';
+import { emptyFilters } from '~/stores/search';
 import gql from 'graphql-tag';
 
 const FETCH_SONGBOOK = gql`
@@ -76,7 +76,7 @@ useHead(generateHead(title, 'I tento zpěvník u nás najdete'));
 
 // other
 const filters = computed(() => {
-  var f = { tags: {}, songbooks: {}, languages: {} };
+  var f = emptyFilters();
   f.songbooks[id] = true;
   return f;
 });
@@ -86,10 +86,7 @@ const filterLink = computed(() => {
   return {
     name: 'search',
     query: toGETParameters({
-      searchString: '',
       filters: filters.value,
-      showAuthors: false,
-      seed: null,
       sort: sort,
     }),
   };

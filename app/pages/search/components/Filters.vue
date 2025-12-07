@@ -129,7 +129,7 @@
             :class="{ active: localSort.by == 1 }"
             :disabled="!!searchString"
             :title="
-              'řadit podle abecedy' +
+              'řadit podle abecedy ' +
               (localSort.by == 1
                 ? localSort.desc
                   ? 'vzestupně'
@@ -152,7 +152,7 @@
             :class="{ active: localSort.by == 2 }"
             :disabled="!!searchString"
             :title="
-              'řadit podle čísla' +
+              'řadit podle čísla ' +
               (localSort.by == 2
                 ? localSort.desc
                   ? 'vzestupně'
@@ -240,7 +240,7 @@
 </template>
 
 <script>
-import tagsFilters from './tagsFilters';
+import tagsFilters from '~/components/Search/tagsFilters';
 import FilterRowItem from './FilterRowItem';
 
 export default {

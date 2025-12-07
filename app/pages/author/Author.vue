@@ -1,7 +1,6 @@
 <template>
   <PageTopBar :title="author?.type_string ?? 'načítám…'">
     <Kebab
-      v-if="author"
       :items="[
         {
           label: 'Nahlásit',
@@ -11,7 +10,7 @@
         {
           label: 'Upravit',
           icon: 'edit',
-          href: $config.public.adminUrl + '/author/' + author.id + '/edit',
+          href: !author ? '' : $config.public.adminUrl + '/author/' + author.id + '/edit',
         },
       ]"
     />

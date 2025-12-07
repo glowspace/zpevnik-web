@@ -1,5 +1,6 @@
 <script>
 import { isEqual, isEmpty } from 'lodash-es';
+import { emptyFilters, emptySort } from '~/stores/search';
 
 export default {
   data() {
@@ -41,33 +42,26 @@ export default {
   },
 };
 
-export function toGETParameters(
-  params = {
-    searchString: '',
-    filters: {
-      tags: [],
-      languages: [],
-      songbooks: [],
-    },
-    sort: {
-      by: 0,
-      desc: false,
-    },
-    seed: null,
-    showAuthors: false,
-  }
-) {
+export function toGETParameters({
+  searchString = '',
+  filters = emptyFilters(),
+  sort = emptySort(),
+  seed = null,
+  showAuthors = false,
+} = {}) {
+  // for destructuring syntax in parameters, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters#destructured_parameter_with_default_value_assignment
+
   const joinKeys = (obj) => (Object.keys(obj).length ? Object.keys(obj).join(',') : undefined);
 
   let get = {
-    text: params.searchString ? params.searchString.replace(/\s/g, '_') : undefined,
-    stitky: joinKeys(params.filters.tags),
-    jazyky: joinKeys(params.filters.languages),
-    zpevniky: joinKeys(params.filters.songbooks),
-    autori: params.showAuthors ? 'ano' : undefined,
-    razeni: params.sort.by > 0 && !params.searchString ? String(params.sort.by) : undefined,
-    sestupne: params.sort.desc && !params.searchString ? 'ano' : undefined,
-    nahoda: params.seed ? String(params.seed) : undefined,
+    text: searchString ? searchString.replace(/\s/g, '_') : undefined,
+    stitky: joinKeys(filters.tags),
+    jazyky: joinKeys(filters.languages),
+    zpevniky: joinKeys(filters.songbooks),
+    autori: showAuthors ? 'ano' : undefined,
+    razeni: sort.by > 0 && !searchString ? String(sort.by) : undefined,
+    sestupne: sort.desc && !searchString ? 'ano' : undefined,
+    nahoda: seed ? String(seed) : undefined,
   };
   // delete undefined items
   Object.keys(get).forEach((key) => {
@@ -110,6 +104,10 @@ function fromGETParameters(params) {
         return obj;
       }, {});
   };
+
+  if (params.vyhledavani) {
+    params.text = params.vyhledavani;
+  }
 
   return {
     searchString: params.text ? params.text.replace(/_/g, ' ') : '',

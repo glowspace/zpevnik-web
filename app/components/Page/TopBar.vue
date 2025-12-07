@@ -2,7 +2,7 @@
   <div class="top-bar-wrapper">
     <div class="top-bar" :class="{ 'custom-container': !fullWidth }">
       <BasicButton
-        v-if="mounted && $router.options.history.state.back"
+        v-if="historyBack"
         icon-name="arrow_back"
         icon-only
         @click="$router.back()"
@@ -30,10 +30,11 @@
 
 <script setup>
 const props = defineProps({ title: String, isH1: Boolean, fullWidth: Boolean });
-const mounted = ref(false);
+const historyBack = ref(false);
+const router = useRouter();
 
 onMounted(() => {
-  mounted.value = true;
+  historyBack.value = Boolean(router.options.history.state.back);
 });
 </script>
 
