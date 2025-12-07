@@ -3,7 +3,7 @@
     <span v-if="song.type">
       <span v-if="original">
         <span>Originál: </span>
-        <BasicClickable :to="original.public_route"><song-name :song="original" /></BasicClickable
+        <BasicClickable :to="original.public_route"><SongName :song="original" /></BasicClickable
         ><br />
         <span v-if="original.authors_pivot.length == 0">Autor neznámý, </span>
         <span v-else>

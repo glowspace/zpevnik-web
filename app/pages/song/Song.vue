@@ -21,8 +21,8 @@
         ]"
       />
     </PageTopBar>
-    <song-loading v-if="$apollo.loading"></song-loading>
-    <song-detail v-else-if="song_lyric" :song="song_lyric"></song-detail>
+    <SongLoading v-if="$apollo.loading" />
+    <SongDetail v-else-if="song_lyric" :song="song_lyric" />
   </div>
 </template>
 

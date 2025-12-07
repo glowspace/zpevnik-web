@@ -8,7 +8,7 @@
     <td>
       <BasicClickable class="block p-3 lg:pl-3" :class="{ 'md:pl-7': isSearch }" :to="linkObject">
         <span v-if="forceNumber" :class="{ 'lg:hidden': isSearch }">{{ songNumber }}. </span>
-        <song-name :song="song_lyric" :songbook-id="songbookId" multiline :active="active" />
+        <SongName :song="song_lyric" :songbook-id="songbookId" multiline :active="active" />
       </BasicClickable>
     </td>
     <td

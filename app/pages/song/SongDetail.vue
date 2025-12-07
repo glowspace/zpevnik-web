@@ -20,16 +20,15 @@
       </div>
       <p class="text-lg" v-if="names.length > 1">{{ names.slice(1).join(', ') }}</p>
       <div class="mt-1 text-sm basic-content">
-        <song-author-label :song="song" />
-        <song-info :song="song" />
+        <SongAuthorLabel :song="song" />
+        <SongInfo :song="song" />
       </div>
     </div>
   </div>
-  <song-box :song_lyric="song"></song-box>
+  <SongBox :song_lyric="song" />
 </template>
 
 <script setup>
-import SongAuthorLabel from './components/SongAuthorLabel';
 import SongBox from './components/SongBox/SongBox';
 import { getNames } from '~/components/Song/Name';
 import useSideStore from '~/stores/side';
