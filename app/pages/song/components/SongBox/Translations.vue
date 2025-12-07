@@ -25,15 +25,9 @@
         :key="subtable.typeNumber"
       >
         <tr>
-          <th
-            colspan="2"
-            :class="subtable.thClass"
-            v-if="filterLyrics(subtable.typeNumber).length"
-          >
+          <th colspan="2" :class="subtable.thClass" v-if="filterLyrics(subtable.typeNumber).length">
             {{
-              filterLyrics(subtable.typeNumber).length == 1
-                ? subtable.labelOne
-                : subtable.labelMore
+              filterLyrics(subtable.typeNumber).length == 1 ? subtable.labelOne : subtable.labelMore
             }}
           </th>
         </tr>
@@ -42,9 +36,8 @@
           :song_lyric="song_lyric"
           :key="song_lyric.id"
           :active="song_lyric.id === props.song_lyric.id"
-          hideIcons
-          allow-authors
-        ></SongListItem>
+          :display="{ authors: true }"
+        />
       </template>
     </tbody>
   </table>

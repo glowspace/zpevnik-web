@@ -6,7 +6,6 @@ export default defineStore('chordShared', {
     showChords: true,
     simpleView: false,
     useFlatScale: false,
-    useFlatScale_notified: false,
     fontSizePercent: 100,
     noSleep: null
   }),

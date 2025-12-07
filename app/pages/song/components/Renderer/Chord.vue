@@ -34,22 +34,6 @@ export default {
     'hasNextSibling',
   ],
 
-  created() {
-    // After being decided between #/b, do not use later chords
-    // (there can be some transposition later in the song)
-    if (this.chordSharedStore.useFlatScale_notified) {
-      return;
-    }
-
-    const isFlatNote = (note) => note.length > 1 && note[1] === 'b';
-
-    // I'm a B-flat chord -> set flats as default
-    if (this.base === 'B' || isFlatNote(this.base) || isFlatNote(this.bass)) {
-      this.chordSharedStore.useFlatScale = true;
-      this.chordSharedStore.useFlatScale_notified = true;
-    }
-  },
-
   computed: {
     ...mapStores(useChordStore),
 

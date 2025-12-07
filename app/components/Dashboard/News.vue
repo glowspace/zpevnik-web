@@ -6,13 +6,13 @@
         :key="item.id"
         :type="item.link_type"
         :link="item.link"
-        class="list-item"
+        class="card-item"
       >
-        <span class="list-icon" v-if="anyIcons">
+        <span class="card-icon" v-if="anyIcons">
           <BasicIcon :name="item.fa_icon" type="fa" />
         </span>
         <span>{{ item.text }}</span>
-        <span class="list-icon" v-if="item.link_type == 'NUXTLINK'">
+        <span class="card-icon" v-if="item.link_type == 'NUXTLINK'">
           <BasicIcon name="arrow_right_alt" />
         </span>
       </UniversalLink>

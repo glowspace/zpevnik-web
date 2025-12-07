@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="author-label">
     <span v-if="song.type">
       <span v-if="original">
         <span>Originál: </span>

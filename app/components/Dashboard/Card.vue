@@ -20,7 +20,7 @@ const props = defineProps({ title: String, moreLink: [String, Object] });
 .card-body {
   @apply bg-surface-200 shadow rounded-xl overflow-hidden;
 
-  :slotted(.list-item) {
+  :slotted(.card-item) {
     @apply flex items-center gap-3 px-4 py-3 hover:bg-surface-50 border-gray-100;
 
     &:not(:last-child) {
@@ -28,8 +28,8 @@ const props = defineProps({ title: String, moreLink: [String, Object] });
     }
   }
 
-  :deep(.list-icon),
-  :deep(.list-note) {
+  :deep(.card-icon),
+  :deep(.card-note) {
     @apply inline-flex justify-center items-center text-gray-700;
 
     &:first-child {
@@ -41,7 +41,7 @@ const props = defineProps({ title: String, moreLink: [String, Object] });
     }
   }
 
-  :deep(.list-note) {
+  :deep(.card-note) {
     @apply px-1;
   }
 }

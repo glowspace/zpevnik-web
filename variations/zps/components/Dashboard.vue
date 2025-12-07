@@ -4,20 +4,20 @@
   <DashboardCard title="Další možnosti">
     <BasicClickable
       href="https://play.google.com/store/apps/details?id=cce.evangelicky_zpevnik"
-      class="list-item"
+      class="card-item"
     >
-      <BasicIcon name="android" class="list-icon" />
+      <BasicIcon name="android" class="card-icon" />
       <span>Aplikace pro Android</span>
     </BasicClickable>
     <BasicClickable
       href="https://apps.apple.com/us/app/evangelick%C3%BD-zp%C4%9Bvn%C3%ADk/id6502984934"
-      class="list-item"
+      class="card-item"
     >
-      <BasicIcon name="ios" class="list-icon" />
+      <BasicIcon name="ios" class="card-icon" />
       <span>Aplikace pro iOS</span>
     </BasicClickable>
-    <BasicClickable :href="getReportLink()" class="list-item">
-      <BasicIcon name="warning" class="list-icon" />
+    <BasicClickable :href="getReportLink()" class="card-item">
+      <BasicIcon name="warning" class="card-icon" />
       <span>Nahlásit chybu</span>
     </BasicClickable>
   </DashboardCard>

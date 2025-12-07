@@ -2,11 +2,7 @@
   <table class="table m-0 w-full">
     <tbody>
       <tr>
-        <th
-          colspan="2"
-          class="text-left px-3 pb-2 pt-5 font-custom-medium"
-          :class="headingClass"
-        >
+        <th colspan="2" class="text-left px-3 pb-2 pt-5 font-custom-medium" :class="headingClass">
           {{ headingText }}
         </th>
       </tr>
@@ -14,8 +10,8 @@
         v-for="song_lyric in songs"
         :song_lyric="song_lyric"
         :key="song_lyric.id"
-        hide-icons
-      ></SongListItem>
+        :display="{ authors: 'max' }"
+      />
     </tbody>
   </table>
 </template>
@@ -51,3 +47,9 @@ export const AuthorSongListFields = gql`
   ${SongListItemFragment}
 `;
 </script>
+
+<style lang="postcss" scoped>
+:deep(.author-label .clickable) {
+  @apply hover:underline;
+}
+</style>

@@ -1,22 +1,27 @@
 <template>
   <tr :class="{ active, 'scroll-m-56': scrollIntoView }" ref="row">
-    <td v-if="isSearch" class="hidden lg:table-cell text-gray text-right w-16 text-sm">
+    <td v-if="display.number" class="hidden lg:table-cell text-gray text-right w-16 text-sm">
       <BasicClickable class="pl-7 p-3 whitespace-nowrap" tabindex="-1" :to="linkObject">
         {{ songbookPrefix + songNumber }}
       </BasicClickable>
     </td>
     <td>
-      <BasicClickable class="block p-3 lg:pl-3" :class="{ 'md:pl-7': isSearch }" :to="linkObject">
-        <span v-if="forceNumber" :class="{ 'lg:hidden': isSearch }">{{ songNumber }}. </span>
+      <BasicClickable
+        class="block p-3 lg:pl-3"
+        :class="{ 'md:pl-7': display.padding }"
+        :to="linkObject"
+      >
+        <span v-if="forceNumber" :class="{ 'lg:hidden': display.number }">{{ songNumber }}. </span>
         <SongName :song="song_lyric" :songbook-id="songbookId" multiline :active="active" />
       </BasicClickable>
     </td>
     <td
-      v-if="allowAuthors || isSearch"
+      v-if="display.authors"
       class="text-gray hidden"
-      :class="[isSearch ? 'lg:table-cell' : 'sm:table-cell']"
+      :class="[display.authors == 'min' ? 'lg:table-cell' : 'sm:table-cell']"
     >
-      <span v-for="(ap, authorIndex) in song_lyric.authors_pivot" :key="authorIndex">
+      <SongAuthorLabel v-if="display.authors == 'max'" :song="song_lyric" class="text-sm" />
+      <span v-else v-for="(ap, authorIndex) in song_lyric.authors_pivot" :key="authorIndex">
         <span v-if="authorIndex">, </span>
         <BasicLink
           :to="ap.pivot.author.public_route"
@@ -32,13 +37,13 @@
       :class="[
         'text-right pr-3 uppercase text-sm',
         { 'text-gray/20': !song_lyric.has_lyrics },
-        { 'md:pr-6': isSearch },
+        { 'md:pr-6': display.padding },
       ]"
       :title="song_lyric.lang_string"
     >
       {{ song_lyric.lang != 'cs' ? song_lyric.lang.substring(0, 3) : '' }}
     </td>
-    <td class="w-24" :class="{ 'md:pr-6': isSearch }" v-if="!hideIcons">
+    <td class="w-24" :class="{ 'md:pr-5': display.padding }" v-if="display.icons">
       <BasicClickable class="icons" :to="linkObject" tabindex="-1">
         <BasicIcon
           v-if="song_lyric.has_chords"
@@ -82,12 +87,20 @@ const props = defineProps({
   song_lyric: Object,
   songbookId: null,
   contextState: Object,
-  forceNumber: Boolean,
-  hideIcons: Boolean,
   active: Boolean,
-  isSearch: Boolean,
-  allowAuthors: Boolean,
   scrollIntoView: Boolean,
+  display: {
+    type: Object,
+    default() {
+      return {
+        padding: false,
+        number: false,
+        authors: false, // or 'min' or true or 'max'
+        icons: false,
+      };
+    },
+  },
+  forceNumber: Boolean,
 });
 
 const rowElement = useTemplateRef('row');

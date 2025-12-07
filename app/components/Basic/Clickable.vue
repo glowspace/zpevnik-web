@@ -5,6 +5,7 @@
     :href="href"
     :target="target"
     @click="clicked"
+    class="clickable"
   ><slot /></component>
 </template>
 

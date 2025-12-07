@@ -31,9 +31,18 @@
               :force-number="
                 preferred_songbook_id != $config.public.variation.songbook || sort == 2
               "
-              :is-search="!isSide"
               :active="index == sideStore.index"
               :scroll-into-view="isSide"
+              :display="
+                isSide
+                  ? { icons: true }
+                  : {
+                      padding: true,
+                      number: true,
+                      authors: 'min',
+                      icons: true,
+                    }
+              "
             />
           </template>
           <tr v-if="results_loaded">
