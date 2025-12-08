@@ -20,7 +20,6 @@ import { toGETParameters } from '~/components/Search/HistoryManager.vue';
 import { emptyFilters } from '~/stores/search';
 
 const requiredAmountOfSongs = 10;
-const sort = { by: 2, desc: false };
 
 export default {
   apollo: {

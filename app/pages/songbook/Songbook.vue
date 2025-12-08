@@ -43,7 +43,7 @@
 
 <script setup>
 import { toGETParameters } from '~/components/Search/HistoryManager.vue';
-import { emptyFilters } from '~/stores/search';
+import { emptyFilters, emptySort } from '~/stores/search';
 import gql from 'graphql-tag';
 
 const FETCH_SONGBOOK = gql`
@@ -80,7 +80,8 @@ const filters = computed(() => {
   f.songbooks[id] = true;
   return f;
 });
-const sort = { by: 2, desc: false };
+var sort = emptySort();
+sort.by = 2;
 
 const filterLink = computed(() => {
   return {
