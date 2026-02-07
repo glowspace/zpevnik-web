@@ -3,7 +3,7 @@
     <div class="mx-5 my-4 md:mt-6">
       <div class="flex items-start justify-between">
         <h1 class="text-2xl font-custom-medium">{{ names[0] }}</h1>
-        <div class="-my-2 -mr-4 shrink-0">
+        <div class="-my-2 -mr-4 shrink-0 print:hidden">
           <BasicButton
             icon-name="chevron_left"
             icon-only
