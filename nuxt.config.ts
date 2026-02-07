@@ -12,6 +12,9 @@ export default defineNuxtConfig({
   devtools: {
     enabled: false,
   },
+  nitro: {
+    preset: 'node_cluster',
+  },
   compatibilityDate: '2025-09-20',
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/apollo'],
   runtimeConfig: {
@@ -81,7 +84,7 @@ export default defineNuxtConfig({
             path: '/zpevniky',
             file: '~/pages/songbook/SongbooksList.vue',
           },
-        ]
+        ],
       );
     },
   },

@@ -1,0 +1,14 @@
+services:
+  client:
+    build: deploy
+    volumes:
+      - .:/var/www/html
+      - "/var/www/html/node_modules"
+    environment:
+      - HOST=0.0.0.0
+      - COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+    ports:
+      - "${HTTP_PORT}:3000"
+    # yarn install, build nuxt, start pm2 server
+    entrypoint: "sh -c 'yarn && yarn build && deploy/swap.sh && pm2-runtime start deploy/ecosystem.config.js'"
+    restart: always

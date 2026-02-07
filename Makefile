@@ -1,14 +1,20 @@
-production-pull:
+.PHONY: pull-production pull-staging up redeploy
+
+pull-production:
 	git checkout main -f
 	git pull origin main
 
-staging-pull:
+pull-staging:
 	git checkout develop -f
 	git pull origin develop
 
-deploy:
+up:
 	docker compose up --build -d
-# 	docker compose exec -T client yarn && docker compose exec -T client yarn build
-# 	echo 'restarting the pm2 server after a successful build'
-# 	docker compose exec -T client pm2 reload all --update-env
-# 	sudo /var/www/html/nginx_clear_cache.sh
+
+dc_exec = docker compose exec -T client
+
+redeploy:
+	$(dc_exec) yarn && $(dc_exec) yarn build
+	echo "build was successful, restarting server"
+	$(dc_exec) deploy/swap.sh
+	$(dc_exec) pm2 reload all --update-env
