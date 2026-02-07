@@ -7,7 +7,7 @@ RUN apk add git python3 py3-pip
 RUN apk add make g++
 
 RUN corepack enable
-RUN yarn dlx pm2
+RUN npm install pm2@latest -g
 
 # Set up work directory
 WORKDIR /var/www/html
