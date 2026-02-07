@@ -37,7 +37,7 @@
         v-if="sideStore.params != null && sideStore.index != null"
         @click="sideStore.show = !sideStore.show"
       />
-      <BasicButton icon-name="dark_mode" icon-only />
+      <BasicButton disabled icon-name="dark_mode" icon-only />
     </div>
   </div>
 </template>
