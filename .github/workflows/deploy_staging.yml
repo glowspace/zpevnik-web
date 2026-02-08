@@ -11,17 +11,17 @@ jobs:
       - name: SSH in staging server
         uses: appleboy/ssh-action@v1.0.3
         with:
-          script: cd /var/www/staging/zpevnik-web_zps-staging && sh deploy/deploy.sh develop
+          script: |
+            cd /var/www/staging/proscholy-web-staging && sh deploy/deploy.sh develop
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY}}
-          passphrase: ${{ secrets.PRIVATE_KEY_PASSPHRASE}}
+          key: ${{ secrets.PRIVATE_KEY }}
       - name: Discord notification
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
-          DISCORD_USERNAME: "${{ github.workflow }} - ${{ github.event.repository.name }}"
-          DISCORD_AVATAR: "https://upload.wikimedia.org/wikipedia/sl/1/11/048029f362c484a2a46b928afbe98837.jpg"
+          DISCORD_USERNAME: '${{ github.workflow }} - ${{ github.event.repository.name }}'
+          DISCORD_AVATAR: 'https://upload.wikimedia.org/wikipedia/sl/thumb/1/11/048029f362c484a2a46b928afbe98837.jpg/250px-048029f362c484a2a46b928afbe98837.jpg'
         with:
-          args: "Proběhlo vývojové nasazení (frontend) na staging.zpevnik.proscholy.cz! :tada:"
+          args: 'Proběhlo vývojové nasazení (frontend) na staging.zpevnik.proscholy.cz! :tada:'

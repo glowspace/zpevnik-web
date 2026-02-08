@@ -11,14 +11,12 @@ jobs:
       - name: SSH in production server
         uses: appleboy/ssh-action@v1.0.3
         with:
-          # script: |
-          #   cd /var/www/html/evangelickyzpevnik   && sh deploy/deploy.sh main
-          #   cd /var/www/html/evangelickykancional && sh deploy/deploy.sh main
+          script: |
+            cd /var/www/proscholy-web && sh deploy/deploy.sh main
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY}}
-          passphrase: ${{ secrets.PRIVATE_KEY_PASSPHRASE}}
+          key: ${{ secrets.PRIVATE_KEY }}
       - name: Discord notification
         uses: Ilshidur/action-discord@master
         env:
@@ -26,4 +24,4 @@ jobs:
           DISCORD_USERNAME: "${{ github.workflow }} - ${{ github.event.repository.name }}"
           DISCORD_AVATAR: "https://upload.wikimedia.org/wikipedia/en/2/2b/Legolas600ppx.jpg"
         with:
-          args: "Proběhlo produkční nasazení (frontend) na www.evangelickyzpevnik.cz! :tada:"
+          args: "Proběhlo produkční nasazení (frontend) na zpevnik.proscholy.cz! :tada:"
