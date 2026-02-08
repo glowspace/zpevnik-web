@@ -1,9 +1,9 @@
-import graphql from '@rollup/plugin-graphql';
 import variations from './variations/variations';
 
 const variationKey = process.env.VARIATION || 'ez';
-const variation =
-  variations.find((v) => v.key == variationKey) || variations[0];
+const variation = variations.find((v) => v.key == variationKey) || variations[0]!;
+
+const siteUrl = process.env.APP_URL || `http://localhost:${process.env.DEV_PORT || 3000}`;
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -12,28 +12,30 @@ export default defineNuxtConfig({
   devtools: {
     enabled: false,
   },
+  nitro: {
+    preset: 'node_cluster',
+  },
   compatibilityDate: '2025-09-20',
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/apollo'],
   runtimeConfig: {
     public: {
-      siteUrl:
-        process.env.APP_URL ||
-        `http://localhost:${process.env.DEV_PORT || 3000}`,
+      siteUrl,
       titleSeparator: ' – ',
-      apiPath: process.env.API_PATH || '/api',
       adminUrl: process.env.ADMIN_URL || '',
-      regenschoriUrl:
-        process.env.REGENSCHORI_URL || 'https://www.regenschori.cz',
+      regenschoriUrl: process.env.REGENSCHORI_URL || 'https://www.regenschori.cz',
       proscholyUrl: process.env.PROSCHOLY_URL || 'https://zpevnik.proscholy.cz',
       variation: variation,
     },
   },
-  vite: {
-    plugins: [graphql()], // Allow usage of .gql/.graphql files
-    define: {
-      'globalThis.__DEV__': JSON.stringify(
-        process.env.NODE_ENV === 'development'
-      ), // Sets apollo in correct (development/production) mode
+  apollo: {
+    // https://apollo.nuxtjs.org/getting-started/configuration
+    clients: {
+      default: {
+        httpEndpoint: siteUrl + (process.env.API_PATH || '/api'),
+        httpLinkOptions: {
+          headers: variation.filter ? { 'Filter-Content': variation.filter } : {},
+        },
+      },
     },
   },
   routeRules: {
@@ -41,6 +43,7 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     configPath: '~/assets/tailwind.config.js',
+    cssPath: '~/assets/css/tailwind.css',
   },
   devServer: {
     port: +(process.env.DEV_PORT || 3000),
@@ -54,6 +57,11 @@ export default defineNuxtConfig({
           {
             name: 'index',
             path: '/',
+            file: '~/pages/index/Index.vue',
+          },
+          {
+            name: 'search',
+            path: '/hledani',
             file: '~/pages/search/Search.vue',
           },
           {
@@ -66,7 +74,17 @@ export default defineNuxtConfig({
             path: '/autor/:id',
             file: '~/pages/author/Author.vue',
           },
-        ]
+          {
+            name: 'songbook',
+            path: '/zpevnik/:id',
+            file: '~/pages/songbook/Songbook.vue',
+          },
+          {
+            name: 'songbooks',
+            path: '/zpevniky',
+            file: '~/pages/songbook/SongbooksList.vue',
+          },
+        ],
       );
     },
   },

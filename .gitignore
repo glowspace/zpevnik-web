@@ -3,8 +3,16 @@ node_modules
 .nuxt
 .nitro
 .cache
-.output
+.output*
 .env
 dist
 .DS_Store
 .idea
+
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

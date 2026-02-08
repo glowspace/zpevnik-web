@@ -1,0 +1,218 @@
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-[60%_1fr] xl:grid-cols-[66%_1fr]">
+    <div>
+      <PageStickyContainer>
+        <div class="md:mt-4 lg:mx-5">
+          <SearchInputBox
+            v-model="searchString"
+            :authors="showAuthors"
+            :loading="songLoading"
+            @enter="inputEnter"
+          />
+          <FilterRow>
+            <template #row>
+              <Filters
+                filter-row-variant="editable"
+                v-model:filters="filters"
+                v-model:show-authors="showAuthors"
+                v-model:sort="sort"
+                :search-string="searchString"
+                @refresh-seed="randomizeSeed"
+                @input="updateHistoryState"
+              ></Filters>
+            </template>
+            <Filters
+              v-model:filters="filters"
+              v-model:show-authors="showAuthors"
+              v-model:sort="sort"
+              :search-string="searchString"
+              @refresh-seed="randomizeSeed"
+              @input="updateHistoryState"
+            ></Filters>
+          </FilterRow>
+        </div>
+      </PageStickyContainer>
+      <div v-if="urlLoaded">
+        <SongList
+          v-if="!showAuthors"
+          :search-string="searchString"
+          :filters="filters"
+          :sort="sort"
+          :seed="seed"
+          @query-loaded="queryLoaded"
+        ></SongList>
+        <AuthorsList v-else :search-string="searchString" @query-loaded="queryLoaded"></AuthorsList>
+      </div>
+    </div>
+    <div
+      class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50"
+    >
+      <div>
+        <Filters
+          v-model:filters="filters"
+          v-model:show-authors="showAuthors"
+          v-model:sort="sort"
+          :search-string="searchString"
+          @refresh-seed="randomizeSeed"
+          @input="updateHistoryState"
+        ></Filters>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import FilterRow from './components/FilterRow';
+import AuthorsList from './components/AuthorsList';
+import Filters from './components/Filters';
+import SearchHistoryManager from '~/components/Search/HistoryManager';
+import { mapWritableState, mapActions } from 'pinia';
+import useSearchStore from '~/stores/search.js';
+
+import gql from 'graphql-tag';
+
+const FETCH_SONG_ROUTE = gql`
+  query ($song_number: Int!) {
+    song_lyric_number(song_number: $song_number) {
+      public_route
+    }
+  }
+`;
+
+const FETCH_SONGBOOK_SONG_ROUTE = gql`
+  query ($number: String!) {
+    song_lyric_songbook_number(number: $number) {
+      public_route
+    }
+  }
+`;
+
+/**
+ * Root search component.
+ *
+ * Toggles 2 views (SearchHome and SearchResults).
+ */
+export default {
+  extends: SearchHistoryManager,
+
+  head() {
+    return generateHead(
+      'Hledání' + this.$config.public.titleSeparator + this.$config.public.variation.title,
+      this.$config.public.variation.description
+    );
+  },
+
+  data() {
+    return {
+      showAuthors: false,
+      songLoading: false, // song route is currently loading
+      urlLoaded: false, // query was loaded from URL
+    };
+  },
+
+  methods: {
+    ...mapActions(useSearchStore, ['randomizeSeed', 'resetBasicSearch', 'setActiveList']),
+
+    queryLoaded() {
+      this.updateHistoryState();
+    },
+
+    inputEnter() {
+      // try to open song or administration
+      if (this.searchString) {
+        let searchParsedToInt = parseInt(this.searchString, 10);
+
+        if (this.searchString == 'admin') {
+          window.location.href = this.$config.public.adminUrl;
+        } else if (!isNaN(searchParsedToInt)) {
+          let query = this.$config.public.variation.filter
+            ? {
+                query: FETCH_SONGBOOK_SONG_ROUTE,
+                variables: {
+                  number:
+                    this.$config.public.variation.filter.toUpperCase() + ' ' + this.searchString,
+                },
+              }
+            : {
+                query: FETCH_SONG_ROUTE,
+                variables: {
+                  song_number: searchParsedToInt,
+                },
+              };
+          this.songLoading = true;
+          this.$apollo
+            .query(query)
+            .then((response) => {
+              let result =
+                response.data.song_lyric_number || response.data.song_lyric_songbook_number;
+
+              if (result) {
+                this.$router
+                  .push({
+                    path: result.public_route,
+                  })
+                  .catch((err) => {});
+              }
+            })
+            .finally(() => {
+              this.songLoading = false;
+            });
+        }
+      }
+    },
+  },
+
+  mounted() {
+    this.applyStateChange(this.$route.query);
+    this.urlLoaded = true;
+  },
+
+  components: {
+    AuthorsList,
+    Filters,
+    FilterRow,
+  },
+
+  computed: {
+    ...mapWritableState(useSearchStore, ['searchString', 'filters', 'sort', 'seed']),
+
+    // getter / setter for the SearchHistoryManager extending component
+    historyStateObject: {
+      get() {
+        const showSeed = !(this.searchString || this.sort.by || this.showAuthors);
+
+        return {
+          searchString: this.searchString,
+          filters: this.filters,
+          showAuthors: this.showAuthors,
+          seed: showSeed ? this.seed : null,
+          sort: this.sort,
+        };
+      },
+
+      set(obj) {
+        this.searchString = obj.searchString;
+        this.filters = obj.filters;
+        this.showAuthors = obj.showAuthors;
+        this.sort = obj.sort;
+
+        if (obj.seed) {
+          this.seed = obj.seed;
+        }
+      },
+    },
+  },
+
+  watch: {
+    showAuthors(val) {
+      this.resetBasicSearch();
+    },
+    $route() {
+      this.applyStateChange(this.$route.query);
+      // we intercept route changes this way, because:
+      // - beforeRouteUpdate fires before route change
+      // - window.onpopstate does not fire for nuxt-links
+    },
+  },
+};
+</script>

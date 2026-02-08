@@ -1,0 +1,86 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* @import './tm-lib'; */
+/* @import './tm-components'; */
+/* @import './song'; */
+
+.custom-container {
+  @apply w-full max-w-[700px] mx-auto;
+}
+
+.stretched-link {
+  position: static;
+  will-change: initial;
+}
+
+.stretched-link::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: auto;
+  content: '';
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 30;
+}
+
+strong {
+  @apply font-custom-medium;
+}
+
+th, td {
+  @apply align-middle;
+}
+
+.basic-content {
+  a {
+    @apply underline hover:no-underline text-primary-800;
+  }
+
+  h2 {
+    @apply mt-8;
+    @apply mb-2;
+  }
+
+  h3,
+  h4 {
+    @apply mt-6;
+  }
+
+  h2, h3, h4 {
+    &:first-child {
+      @apply mt-0;
+    }
+  }
+
+  p {
+    @apply my-3;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply font-custom-bold;
+  }
+
+  h4 {
+    @apply font-custom-medium;
+  }
+
+  ol {
+    @apply list-decimal pl-5 my-2;
+  }
+
+  li {
+    @apply my-2;
+  }
+}
