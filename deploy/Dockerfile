@@ -1,13 +1,20 @@
-# Image
-FROM node:24.13-alpine
-
+FROM node:24.13-alpine AS base
+WORKDIR /app
 RUN apk update
-# required for yarn install
-RUN apk add git python3 py3-pip
-RUN apk add make g++ rsync
+RUN apk add git
 
+FROM base AS build
 RUN corepack enable
-RUN npm install pm2@latest -g
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+COPY package.json yarn.lock .yarnrc.yml ./
+# if .yarn directory is used, it should be copied here
+RUN yarn install
+COPY . ./
+RUN yarn build
 
-# Set up work directory
-WORKDIR /var/www/html
+FROM base AS run
+RUN npm install pm2@latest -g
+ENV HOST=0.0.0.0
+COPY deploy/ecosystem.config.js ./
+COPY --from=build /app/.output ./.output/
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]

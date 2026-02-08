@@ -5,7 +5,7 @@ module.exports = {
       port: '3000',
       exec_mode: 'cluster',
       instances: process.env.N_INSTANCES || '1', // number of instances
-      script: '.output_live/server/index.mjs'
+      script: '.output/server/index.mjs'
     }
   ]
 }
