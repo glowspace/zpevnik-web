@@ -11,7 +11,7 @@ jobs:
       - name: SSH in staging server
         uses: appleboy/ssh-action@v1.0.3
         with:
-          script: cd /var/www/html/staging/evangelickyzpevnik-staging && deploy/deploy.sh develop
+          script: cd /var/www/html/staging/evangelickyzpevnik-staging && sh deploy/deploy.sh develop
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
