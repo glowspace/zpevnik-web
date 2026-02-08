@@ -1,0 +1,156 @@
+<template>
+  <PageTopBar :title="author?.type_string ?? 'načítám…'">
+    <Kebab
+      :items="[
+        {
+          label: 'Nahlásit',
+          icon: 'warning',
+          href: getReportLink('author'),
+        },
+        {
+          label: 'Upravit',
+          icon: 'edit',
+          href: !author ? '' : $config.public.adminUrl + '/author/' + author.id + '/edit',
+        },
+      ]"
+    />
+  </PageTopBar>
+  <div class="custom-container">
+    <div class="m-5">
+      <template v-if="pending">
+        <LoaderSkeleton type="heading" class="mt-6" />
+        <LoaderSkeleton type="paragraph" class="mt-6" />
+      </template>
+      <template v-else-if="!author">
+        <!-- displayed only after client-side navigation (SSR throws) -->
+        <ErrorCard :status-code="404" />
+      </template>
+      <template v-else>
+        <h1 class="mb-3 text-2xl font-semibold">{{ author.name }}</h1>
+
+        <div class="basic-content">
+          <div v-if="author.description">
+            <h2>O {{ aboutStrings[author.type] }}</h2>
+            <p>{{ author.description }}</p>
+          </div>
+
+          <p v-if="author.members.length">
+            <strong>Související autoři: </strong>
+            <span v-for="(members, key) in author.members" :key="key">
+              <span v-if="key">, </span>
+              <BasicClickable :to="members.public_route">{{ members.name }}</BasicClickable>
+            </span>
+          </p>
+
+          <p v-if="author.memberships.length">
+            <strong>Skupiny: </strong>
+            <span v-for="(membership, key2) in author.memberships" :key="key2">
+              <span v-if="key2">, </span>
+              <BasicClickable :to="membership.public_route">{{ membership.name }}</BasicClickable>
+            </span>
+          </p>
+        </div>
+
+        <div
+          class="-mx-3"
+          v-if="
+            author.songs_originals.length +
+              author.songs_translations.length +
+              author.songs_interpreted.length >
+            0
+          "
+        >
+          <AuthorSongList
+            heading-text="Autorské písně"
+            heading-class="text-primary"
+            v-if="author.songs_originals.length"
+            :songs="author.songs_originals"
+          />
+          <AuthorSongList
+            heading-text="Překlady"
+            heading-class="text-greendark"
+            v-if="author.songs_translations.length"
+            :songs="author.songs_translations"
+          />
+          <AuthorSongList
+            heading-text="Interpretace písní"
+            heading-class="text-red"
+            v-if="author.songs_interpreted.length"
+            :songs="author.songs_interpreted"
+          />
+        </div>
+        <div v-else class="py-5">V databázi zatím nemáme žádné související písně.</div>
+
+        <PageFooter />
+      </template>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import AuthorSongList, { AuthorSongListFields } from './AuthorSongList';
+import gql from 'graphql-tag';
+
+const FETCH_AUTHOR = gql`
+  query ($id: ID!) {
+    author(id: $id) {
+      id
+      name
+      type
+      type_string
+      description
+      public_route
+      members {
+        name
+        public_route
+      }
+      memberships {
+        name
+        public_route
+      }
+      songs_originals {
+        ...AuthorSongListFields
+      }
+      songs_translations {
+        ...AuthorSongListFields
+      }
+      songs_interpreted {
+        ...AuthorSongListFields
+      }
+    }
+  }
+
+  ${AuthorSongListFields}
+`;
+
+// load data
+const route = useRoute();
+const { data, pending } = await useLazyAsyncQuery(FETCH_AUTHOR, { id: route.params.id });
+const author = computed(() => data.value?.author);
+
+if (import.meta.server) {
+  checkNotFound(author.value);
+}
+
+// head content
+const { variation, titleSeparator } = useRuntimeConfig()?.public;
+const aboutStrings = ['autorovi', 'hudebním uskupení', 'schole', 'kapele', 'sboru'];
+const thisStrings = [
+  'tohoto autora',
+  'tohoto hudebního uskupení',
+  'této scholy',
+  'této kapely',
+  'tohoto sboru',
+];
+
+const title = computed(() => (author.value?.name ?? 'Autor') + titleSeparator + variation.title);
+const description = computed(() => {
+  if (author.value?.description) {
+    return author.value.description;
+  }
+
+  const type = author.value?.type ?? 0;
+  return `Písně i ${thisStrings[type]} obsahuje ${variation.name}`;
+});
+useHead(generateHead(title, description));
+</script>

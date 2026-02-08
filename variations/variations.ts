@@ -3,6 +3,7 @@ interface IVariation {
   filter?: string; // used as header and as songbook shorthand
   name: string;
   title: string;
+  description: string;
   itunesId: string;
   navbar: { path: string; icon: string; label: string }[];
   songbook?: number;
@@ -16,8 +17,9 @@ const variations: IVariation[] = [
     key: 'zps',
     name: 'Zpěvník pro scholy',
     title: 'ProScholy.cz',
+    description: 'Zpěvník ProScholy.cz je největší česká platforma sdružující křesťanské písně',
     itunesId: '1475375453',
-    navbar: [],
+    navbar: [{ path: '/o-zpevniku', icon: 'info', label: 'O zpěvníku' }],
     showLiturgyApproval: true,
   },
   {
@@ -25,6 +27,7 @@ const variations: IVariation[] = [
     filter: 'ez',
     name: 'Evangelický zpěvník',
     title: 'Evangelický zpěvník',
+    description: 'Digitální evangelický zpěvník je společným projektem Českobratrské církve evangelické a týmu vývojářů z komunity Glow Space',
     itunesId: '6502984934',
     navbar: [
       { path: '/o-zpevniku', icon: 'info', label: 'O zpěvníku' },
@@ -39,10 +42,9 @@ const variations: IVariation[] = [
     filter: 'ek',
     name: 'Evangelický kancionál',
     title: 'Evangelický kancionál',
+    description: 'Digitální evangelický kancionál je společným projektem Slezské církve evangelické a. v. a týmu vývojářů z komunity Glow Space',
     itunesId: '',
-    navbar: [
-      { path: '/o-projektu', icon: 'info', label: 'O projektu' },
-    ],
+    navbar: [{ path: '/o-projektu', icon: 'info', label: 'O projektu' }],
     songbook: 63,
     hideTags: true,
     hideAuthorSearch: true,
