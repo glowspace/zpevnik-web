@@ -55,5 +55,5 @@
 
 <script setup>
 const props = defineProps(['song']);
-const original = computed(() => props.song.song.song_lyrics.find((sl) => sl.type == 0));
+const original = computed(() => props.song.song?.song_lyrics.find((sl) => sl.type == 0));
 </script>
