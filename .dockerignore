@@ -4,7 +4,7 @@
 .github
 README.md
 compose.yml
-deploy/.dockerignore
+.dockerignore
 deploy/Dockerfile
 
 node_modules
