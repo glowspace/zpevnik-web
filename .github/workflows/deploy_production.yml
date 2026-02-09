@@ -13,6 +13,8 @@ jobs:
         with:
           script: |
             cd /var/www/proscholy-web && sh deploy/deploy.sh main
+            cd /var/www/evangelickyzpevnik-web && sh deploy/deploy.sh main
+            cd /var/www/evangelickykancional-web && sh deploy/deploy.sh main
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.USERNAME }}
