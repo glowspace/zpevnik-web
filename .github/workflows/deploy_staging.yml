@@ -13,6 +13,7 @@ jobs:
         with:
           script: |
             cd /var/www/staging/proscholy-web-staging && sh deploy/deploy.sh develop
+            cd /var/www/staging/evangelickyzpevnik-web-staging && sh deploy/deploy.sh develop
             cd /var/www/staging/evangelickykancional-web-staging && sh deploy/deploy.sh develop
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
