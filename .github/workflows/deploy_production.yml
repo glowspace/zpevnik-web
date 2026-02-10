@@ -23,7 +23,7 @@ jobs:
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_DEPLOY_WEBHOOK_URL }}
-          DISCORD_USERNAME: "${{ github.workflow }} - ${{ github.event.repository.name }}"
-          DISCORD_AVATAR: "https://upload.wikimedia.org/wikipedia/en/2/2b/Legolas600ppx.jpg"
+          DISCORD_USERNAME: '${{ github.workflow }} - ${{ github.event.repository.name }}'
+          DISCORD_AVATAR: 'https://upload.wikimedia.org/wikipedia/en/2/2b/Legolas600ppx.jpg'
         with:
-          args: "Proběhlo produkční nasazení (frontend) na zpevnik.proscholy.cz! :tada:"
+          args: 'Proběhlo produkční nasazení (frontend) na zpevnik.proscholy.cz! :tada:'

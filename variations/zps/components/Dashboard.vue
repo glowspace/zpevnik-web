@@ -3,14 +3,14 @@
   <DashboardSongbooks />
   <DashboardCard title="Další možnosti">
     <BasicClickable
-      href="https://play.google.com/store/apps/details?id=cce.evangelicky_zpevnik"
+      href="https://play.google.com/store/apps/details?id=jozkar.mladez"
       class="card-item"
     >
       <BasicIcon name="android" class="card-icon" />
       <span>Aplikace pro Android</span>
     </BasicClickable>
     <BasicClickable
-      href="https://apps.apple.com/us/app/evangelick%C3%BD-zp%C4%9Bvn%C3%ADk/id6502984934"
+      href="https://apps.apple.com/us/app/zp%C4%9Bvn%C3%ADk-pro-scholy/id1475375453"
       class="card-item"
     >
       <BasicIcon name="ios" class="card-icon" />
