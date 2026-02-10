@@ -20,5 +20,9 @@
       <BasicIcon name="warning" class="card-icon" />
       <span>Nahlásit chybu</span>
     </BasicClickable>
+    <BasicClickable href="https://www.darujme.cz/glowspace" class="card-item">
+      <BasicIcon name="volunteer_activism " class="card-icon" />
+      <span>Podpořit projekt</span>
+    </BasicClickable>
   </DashboardCard>
 </template>
