@@ -6,10 +6,11 @@
           "FQHP4NZDDV.cz.proscholy.id.Zpevnik"
         ],
         "components": [
-          {
-            "/": "/*",
-            "comment": "Matches any URL."
-          }
+            {"/": "/"},
+            {"/": "/hledani"},
+            {"/": "/zpevniky"},
+            {"/": "/pisen/*"},
+            {"/": "/zpevnik/*"}
         ]
       }
     ]
