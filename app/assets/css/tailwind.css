@@ -76,6 +76,10 @@ th, td {
     @apply font-custom-medium;
   }
 
+  ul {
+    @apply list-disc pl-5 my-2;
+  }
+
   ol {
     @apply list-decimal pl-5 my-2;
   }
