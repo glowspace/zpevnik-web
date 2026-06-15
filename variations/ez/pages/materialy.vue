@@ -18,6 +18,14 @@
         Jiřímu Pejlovi.
       </p>
 
+      <h2>Korektury tištěných verzí zpěvníku a chorálníku</h2>
+      <ul>
+        <li><a href="https://drive.google.com/file/d/15p9-nBWHzVZWoS4TKI1OqBlhRdkJa07o/view">Tabulka – přehled korektur tištěného zpěvníku</a></li>
+        <li><a href="https://drive.google.com/file/d/1gBex4xknHPAUc35KdxztSXeThu_EtIUs/view">Opravené stránky zpěvníku (vše v jednom PDF)</a></li>
+        <li><a href="https://drive.google.com/file/d/1xQRHYKOMgZ1blxMAi7kWcL3vONMbFRzH/view">Tabulka – přehled korektur tištěného chorálníku</a></li>
+        <li><a href="https://drive.google.com/file/d/1PIxH5y9PgEll9DM3IQMUuhiHUG6lasiA/view">Opravené stránky chorálníku (vše v jednom PDF)</a></li>
+      </ul>
+
       <h2>Nahrávky písní</h2>
       <p>
         Poslouchejte
