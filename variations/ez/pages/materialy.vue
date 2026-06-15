@@ -2,28 +2,27 @@
   <PageTopBar title="Materiály ke stažení" is-h1 />
   <div class="custom-container">
     <div class="cont basic-content">
-      <p>Hledáte chorálník nebo kytarový doprovodník? Odpovídající materiály najdete u&nbsp;jednotlivých písní v sekci Noty.</p>
-      <h2>Společné písně ve starém a novém zpěvníku</h2>
+      <p>Hledáte chorálník nebo kytarový doprovodník? Odpovídající materiály najdete u&nbsp;jednotlivých písní v&nbsp;sekci Noty.</p>
+      <h2>Společné písně ve starém a&nbsp;novém zpěvníku</h2>
       <p>
-        Pro snazší seznámení s novým zpěvníkem jsme připravili
+        Pro snazší seznámení s&nbsp;novým zpěvníkem jsme připravili
         <a
           href="https://docs.google.com/spreadsheets/d/15ojIx58a8Kw9ZI8OBafjEZBVJmQruTBaV7bvzjC7E-c/edit?usp=sharing"
           >srovnávací tabulku</a
         >, jejímž prostřednictvím můžete dohledat písně ze starých zpěvníků (EZ,
-        Svítá) v novém.
+        Svítá) v&nbsp;novém.
       </p>
       <p>
         Tabulka je průběžně aktualizována jako živý materiál. Přibývají také
-        odkazy na biblické texty. Za pomoc s přípravou děkujeme Ewě Jelinek a
-        Jiřímu Pejlovi.
+        odkazy na biblické texty. Za pomoc s&nbsp;přípravou děkujeme Ewě Jelinek a&nbsp;Jiřímu Pejlovi.
       </p>
 
-      <h2>Korektury tištěných verzí zpěvníku a chorálníku</h2>
+      <h2>Korektury tištěných verzí zpěvníku a&nbsp;chorálníku</h2>
       <ul>
         <li><a href="https://drive.google.com/file/d/15p9-nBWHzVZWoS4TKI1OqBlhRdkJa07o/view">Tabulka – přehled korektur tištěného zpěvníku</a></li>
-        <li><a href="https://drive.google.com/file/d/1gBex4xknHPAUc35KdxztSXeThu_EtIUs/view">Opravené stránky zpěvníku (vše v jednom PDF)</a></li>
+        <li><a href="https://drive.google.com/file/d/1gBex4xknHPAUc35KdxztSXeThu_EtIUs/view">Opravené stránky zpěvníku (vše v&nbsp;jednom PDF)</a></li>
         <li><a href="https://drive.google.com/file/d/1xQRHYKOMgZ1blxMAi7kWcL3vONMbFRzH/view">Tabulka – přehled korektur tištěného chorálníku</a></li>
-        <li><a href="https://drive.google.com/file/d/1PIxH5y9PgEll9DM3IQMUuhiHUG6lasiA/view">Opravené stránky chorálníku (vše v jednom PDF)</a></li>
+        <li><a href="https://drive.google.com/file/d/1PIxH5y9PgEll9DM3IQMUuhiHUG6lasiA/view">Opravené stránky chorálníku (vše v&nbsp;jednom PDF)</a></li>
       </ul>
 
       <h2>Nahrávky písní</h2>
@@ -35,11 +34,11 @@
         >.
       </p>
 
-      <h2>Písně k promítání</h2>
+      <h2>Písně k&nbsp;promítání</h2>
       <p>
         Připravili jsme verzi zpěvníku vhodnou pro promítání přes projektor na
-        plátno či zeď. Využíváme k tomu volně dostupný program program OpenLP.
-        Za pomoc s přípravou dat děkujeme svitavskému faráři Filipu Kellerovi.
+        plátno či zeď. Využíváme k&nbsp;tomu volně dostupný program program OpenLP.
+        Za pomoc s&nbsp;přípravou dat děkujeme svitavskému faráři Filipu Kellerovi.
       </p>
 
       <h3>Jak na to?</h3>
@@ -62,8 +61,8 @@
           s&nbsp;písněmi a&nbsp;označte všechny soubory.
         </li>
         <li>
-          Písně se nahrají do databáze a můžete začít. Program OpenLP má různé
-          možnosti nastavení a zobrazení.
+          Písně se nahrají do databáze a&nbsp;můžete začít. Program OpenLP má různé
+          možnosti nastavení a&nbsp;zobrazení.
         </li>
       </ol>
     </div>
