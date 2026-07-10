@@ -14,6 +14,12 @@
             href: !song_lyric ? '' : $config.public.adminUrl + '/song/' + song_lyric.id + '/edit',
           },
           {
+            label: 'Regenschori.cz',
+            icon: 'church',
+            href: !song_lyric ? '' : $config.public.regenschoriUrl + song_lyric.public_route,
+            hidden: !$config.public.variation.showRegenschoriLink,
+          },
+          {
             label: 'Tisk',
             icon: 'print',
             href: 'javascript:window.print()',
