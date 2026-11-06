@@ -9,14 +9,8 @@
             class="pl-2 font-custom-medium"
             @click="topMode = topMode == 1 ? 0 : 1"
           >
-            <BasicIcon
-              name="audio_file"
-              :fill="topMode == 1"
-              class="text-primary"
-            />
-            <span v-if="scores.length && otherExternals.length"
-              >Noty, materiály</span
-            >
+            <BasicIcon name="audio_file" :fill="topMode == 1" class="text-primary" />
+            <span v-if="scores.length && otherExternals.length">Noty, materiály</span>
             <span v-else-if="scores.length">Noty</span>
             <span v-else>Materiály</span>
           </BasicChip>
@@ -38,18 +32,13 @@
             <span>Aranže</span>
           </BasicChip>
           <BasicChip
-            v-if="
-              (hasTags || publicSongbookRecords.length) &&
-              !$config.public.variation.hideTags
-            "
+            v-if="(hasTags || publicSongbookRecords.length) && !$config.public.variation.hideTags"
             class="pl-2 font-custom-medium"
             :class="{ active: topMode == 3 }"
             @click="topMode = topMode == 3 ? 0 : 3"
           >
             <BasicIcon name="sell" :fill="topMode == 3" class="text-primary" />
-            <span v-if="hasTags && publicSongbookRecords.length"
-              >Štítky, zpěvníky</span
-            >
+            <span v-if="hasTags && publicSongbookRecords.length">Štítky, zpěvníky</span>
             <span v-else-if="hasTags">Štítky</span>
             <span v-else>Zpěvníky</span>
           </BasicChip>
@@ -65,11 +54,7 @@
         </div>
 
         <!-- scores -->
-        <TopBox
-          :active="topMode === 1"
-          @close="topMode = 0"
-          title="Noty a materiály"
-        >
+        <TopBox :active="topMode === 1" @close="topMode = 0" title="Noty a materiály">
           <div class="mb-3" v-if="!$apollo.loading">
             <div
               v-if="scores.length && otherExternals.length"
@@ -102,24 +87,13 @@
           </div>
         </TopBox>
         <!-- translations -->
-        <TopBox
-          :active="topMode === 2"
-          @close="topMode = 0"
-          title="Seznam jazykových verzí"
-        >
+        <TopBox :active="topMode === 2" @close="topMode = 0" title="Seznam jazykových verzí">
           <div class="px-3 pb-3">
-            <Translations
-              v-if="!$apollo.loading && renderTranslations"
-              :song_lyric="song_lyric"
-            />
+            <Translations v-if="!$apollo.loading && renderTranslations" :song_lyric="song_lyric" />
           </div>
         </TopBox>
         <!-- tags -->
-        <TopBox
-          :active="topMode === 3"
-          @close="topMode = 0"
-          title="Štítky a zpěvníky"
-        >
+        <TopBox :active="topMode === 3" @close="topMode = 0" title="Štítky a zpěvníky">
           <div class="px-5 pb-5" v-if="!$apollo.loading">
             <tags :song="song_lyric"></tags>
           </div>
@@ -145,10 +119,7 @@
             <!-- MusicXML is preferred -->
             <!-- todo: let the user select if they prefer lilypond or mxl -->
             <div
-              v-if="
-                song_lyric.lilypond_svg &&
-                !song_lyric.external_rendered_scores[0]?.public_url
-              "
+              v-if="song_lyric.lilypond_svg && !song_lyric.external_rendered_scores[0]?.public_url"
               v-html="song_lyric.lilypond_svg"
               class="mb-3 lilypond-container"
             ></div>
@@ -159,11 +130,7 @@
             />
             <span v-if="song_lyric.has_lyrics">
               <div
-                v-if="
-                  !$apollo.loading &&
-                  song_lyric.capo > 0 &&
-                  chordSharedStore.showChords
-                "
+                v-if="!$apollo.loading && song_lyric.capo > 0 && chordSharedStore.showChords"
                 class="mb-2"
               >
                 <i>capo: {{ song_lyric.capo }}</i>
@@ -197,7 +164,10 @@
     "
     :scrollable="scrollable"
     :media-available="recordings.length"
-    :show-tools-badge="!!chordSharedStore.transposition"
+    :show-tools-badge="
+      !!chordSharedStore.transposition ||
+      (song_lyric.has_chords && (!chordSharedStore.showChords || chordSharedStore.simpleView))
+    "
   >
     <PageBottomSheets v-model="showTools" title="Nástroje" position-absolute>
       <div
@@ -215,9 +185,7 @@
           'opacity-40 pointer-events-none': !chordSharedStore.showChords,
         }"
       >
-        <chord-sharp-flat
-          v-model="chordSharedStore.useFlatScale"
-        ></chord-sharp-flat>
+        <chord-sharp-flat v-model="chordSharedStore.useFlatScale"></chord-sharp-flat>
       </div>
 
       <div>
@@ -314,45 +282,34 @@ export default {
 
     hasExternals: {
       get() {
-        return (
-          this.song_lyric &&
-          this.song_lyric.externals &&
-          this.song_lyric.externals.length
-        );
+        return this.song_lyric && this.song_lyric.externals && this.song_lyric.externals.length;
       },
     },
 
     hasArrangements: {
       get() {
         return (
-          this.song_lyric &&
-          this.song_lyric.arrangements &&
-          this.song_lyric.arrangements.length
+          this.song_lyric && this.song_lyric.arrangements && this.song_lyric.arrangements.length
         );
       },
     },
 
     recordings: {
       get() {
-        return this.song_lyric.externals.filter(
-          (ext) => ext.content_type == 'RECORDING'
-        );
+        return this.song_lyric.externals.filter((ext) => ext.content_type == 'RECORDING');
       },
     },
 
     scores: {
       get() {
-        return this.song_lyric.externals.filter(
-          (ext) => ext.content_type == 'SCORE'
-        );
+        return this.song_lyric.externals.filter((ext) => ext.content_type == 'SCORE');
       },
     },
 
     otherExternals: {
       get() {
         return this.song_lyric.externals.filter(
-          (ext) =>
-            ext.content_type != 'RECORDING' && ext.content_type != 'SCORE'
+          (ext) => ext.content_type != 'RECORDING' && ext.content_type != 'SCORE',
         );
       },
     },
@@ -360,9 +317,7 @@ export default {
     renderTranslations: {
       get() {
         // if SongLyric is an arrangement, then .song property is undefined
-        return (
-          this.song_lyric.song && this.song_lyric.song.song_lyrics.length > 1
-        );
+        return this.song_lyric.song && this.song_lyric.song.song_lyrics.length > 1;
       },
     },
 
@@ -381,9 +336,7 @@ export default {
     },
 
     publicSongbookRecords() {
-      return this.song_lyric.songbook_records.filter(
-        (sb) => !sb.pivot.songbook.is_private
-      );
+      return this.song_lyric.songbook_records.filter((sb) => !sb.pivot.songbook.is_private);
     },
 
     mediaTypes: {
@@ -400,7 +353,7 @@ export default {
         var returnArray = [];
         for (let i = 0; i < arrayOfTypes.length; i++) {
           returnArray[i] = this.recordings.filter(
-            (ext) => ext.media_type == arrayOfTypes[i]
+            (ext) => ext.media_type == arrayOfTypes[i],
           ).length;
         }
         return returnArray;
@@ -427,7 +380,6 @@ export default {
     this.debouncedCheckScroll = debounce(this.checkScroll, 200);
     // this prevents transposition from being preserved globally (you want just the one song to be transposed, not the whole songbook)
     this.chordSharedStore.transposition = 0;
-    this.chordSharedStore.showChords = this.song_lyric.has_chords;
   },
 
   mounted() {

@@ -9,4 +9,8 @@ export default defineStore('chordShared', {
     fontSizePercent: 100,
     noSleep: null
   }),
+  persist: {
+    storage: piniaPluginPersistedstate.cookies(),
+    pick: ['showChords', 'simpleView', 'useFlatScale', 'fontSizePercent'],
+  }
 })

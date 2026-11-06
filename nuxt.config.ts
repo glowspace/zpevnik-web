@@ -16,7 +16,13 @@ export default defineNuxtConfig({
     preset: 'node_cluster',
   },
   compatibilityDate: '2025-09-20',
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/color-mode', '@pinia/nuxt', '@nuxtjs/apollo'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/color-mode',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+    '@nuxtjs/apollo',
+  ],
   runtimeConfig: {
     public: {
       siteUrl,
