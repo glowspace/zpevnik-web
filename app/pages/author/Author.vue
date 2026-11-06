@@ -62,7 +62,7 @@
         >
           <AuthorSongList
             heading-text="Autorské písně"
-            heading-class="text-primary"
+            heading-class="text-blue"
             v-if="author.songs_originals.length"
             :songs="author.songs_originals"
           />

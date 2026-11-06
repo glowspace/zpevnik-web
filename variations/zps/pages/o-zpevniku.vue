@@ -32,8 +32,8 @@
       </p>
     </div>
 
-    <div class="mx-auto my-10 max-w-[400px]">
-      <div data-darujme-widget-token="uzsiey6anqbiywa3"></div>
+    <div class="mx-auto my-10 max-w-[400px] dark:invert dark:hue-rotate-[140deg]">
+      <WidgetFunding />
     </div>
   </div>
 </template>
@@ -47,17 +47,6 @@ useHead(
     'Jak vzniká největší český křesťanský online zpěvník a kdo ho tvoří'
   )
 );
-
-onMounted(() => {
-  +function(w, d, s, u, a, b) {
-    w['DarujmeObject'] = u;
-    w[u] = w[u] || function () { (w[u].q = w[u].q || []).push(arguments) };
-    a = d.createElement(s); b = d.getElementsByTagName(s)[0];
-    a.async = 1; a.src = "https://www.darujme.cz/assets/scripts/widget.js";
-    b.parentNode.insertBefore(a, b);
-  }(window, document, 'script', 'Darujme');
-  Darujme(1, "uzsiey6anqbiywa3", 'render', "https://www.darujme.cz/widget?token=uzsiey6anqbiywa3", "100%");
-})
 </script>
 
 <style lang="postcss" scoped>

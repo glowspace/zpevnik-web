@@ -34,7 +34,7 @@
 <style lang="postcss" scoped>
 .bottom-bar-wrapper {
   @apply sticky bottom-0 z-10 bg-surface-200 dark:bg-surfacedark-200
-  shadow md:shadow-none md:border-t border-primary-150 w-full print:hidden;
+  shadow md:shadow-none md:border-t border-primary-150 dark:border-surfacedark-500 w-full print:hidden;
 }
 
 .bottom-bar {

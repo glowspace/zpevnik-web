@@ -20,6 +20,6 @@ useHead({
     { name: 'apple-itunes-app', content: 'app-id=' + variation.itunesId },
   ],
   link: getLinks(),
-  script: [{ src: '/dark.js' }],
+  // script: [{ src: '/dark.js' }],
 });
 </script>

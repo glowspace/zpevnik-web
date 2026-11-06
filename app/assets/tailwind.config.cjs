@@ -87,7 +87,7 @@ const variation = variations.find((v) => v.key == variationKey) || variations[0]
 
 // note: if you change these values, you may need to restart the `yarn dev` nuxt server
 module.exports = {
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: 'selector',
   theme: {
     colors: {
       inherit: 'inherit',

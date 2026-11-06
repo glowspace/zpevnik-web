@@ -34,7 +34,7 @@
       </div>
     </div>
     <div
-      class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50"
+      class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 dark:border-surfacedark-500 bg-surface-50 dark:bg-surfacedark-50"
     >
       <img v-if="songbook?.songbook_img_url" :src="songbook.songbook_img_url" />
     </div>

@@ -22,7 +22,7 @@
           {
             label: 'Tisk',
             icon: 'print',
-            href: 'javascript:window.print()',
+            click: printPage,
           },
         ]"
       />
@@ -163,6 +163,10 @@ export default {
   },
 
   methods: {
+    printPage() {
+      window.print();
+    },
+
     getTitle() {
       return (
         (this.song_lyric
@@ -211,14 +215,14 @@ export default {
         ? String(
             this.$config.public.variation.songbook == null
               ? this.song_lyric?.song_number
-              : this.songbookNumber
+              : this.songbookNumber,
           )
         : 'načítám…';
     },
 
     songbookNumber() {
       return this.song_lyric.songbook_records.find(
-        (record) => record.pivot.songbook.id == this.$config.public.variation.songbook
+        (record) => record.pivot.songbook.id == this.$config.public.variation.songbook,
       )?.pivot.number;
     },
   },

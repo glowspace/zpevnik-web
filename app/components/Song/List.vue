@@ -25,11 +25,11 @@
               :context-state="
                 generateSideState(
                   { searchString, filters: toRaw(filters), sort: toRaw(sort), seed },
-                  index
+                  index,
                 )
               "
               :force-number="
-                preferred_songbook_id != $config.public.variation.songbook || sort == 2
+                preferred_songbook_id != $config.public.variation.songbook || sort == 2 || numericSearch
               "
               :active="index == sideStore.index"
               :scroll-into-view="isSide"
@@ -153,6 +153,12 @@ export default {
   },
 
   computed: {
+    numericSearch() {
+      var code = this.searchString.charCodeAt(0); // code of the first character
+      var firstIsDigit = code >= 48 && code <= 57; // 48 is '0', 57 is '9'
+      return firstIsDigit;
+    },
+
     searchParams() {
       return buildElasticSearchParams({
         searchString: this.searchString,
@@ -164,7 +170,7 @@ export default {
             saints: this.tags_saints,
             sacred_occasion: this.tags_sacred_occasion,
           },
-          this.filters.tags
+          this.filters.tags,
         ),
         filterLanguages: this.filters.languages,
         filterSongbooks: this.filters.songbooks,
@@ -219,7 +225,7 @@ export default {
           updateQuery: (previousResult, { fetchMoreResult }) => {
             const { hasMorePages, mergedResult } = mergeFetchMoreResult(
               previousResult,
-              fetchMoreResult
+              fetchMoreResult,
             );
             this.enable_more = hasMorePages;
 

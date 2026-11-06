@@ -41,7 +41,7 @@ onMounted(() => {
 <style lang="postcss" scoped>
 .top-bar-wrapper {
   @apply w-full sticky top-0 z-10 bg-surface-200 dark:bg-surfacedark-100
-  shadow md:shadow-none md:border-b border-primary-150 print:hidden;
+  shadow md:shadow-none md:border-b border-primary-150 dark:border-surfacedark-500 print:hidden;
 }
 
 .top-bar {

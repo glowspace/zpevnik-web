@@ -6,6 +6,14 @@
 /* @import './tm-components'; */
 /* @import './song'; */
 
+:root {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
 .custom-container {
   @apply w-full max-w-[700px] mx-auto;
 }
@@ -41,7 +49,7 @@ th, td {
 
 .basic-content {
   a {
-    @apply underline hover:no-underline text-primary-800;
+    @apply underline hover:no-underline text-primary-800 dark:text-primary-200;
   }
 
   h2 {

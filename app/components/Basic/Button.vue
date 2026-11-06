@@ -16,13 +16,7 @@
       },
     ]"
   >
-    <BasicIcon
-      v-if="iconName"
-      :name="iconName"
-      :type="iconType"
-      :fill="iconFill"
-      class="icon"
-    />
+    <BasicIcon v-if="iconName" :name="iconName" :type="iconType" :fill="iconFill" class="icon" />
     <slot />
   </BasicClickable>
 </template>
@@ -62,15 +56,15 @@ const btnType = computed(() => {
 .btn.text,
 .btn.outlined {
   @apply hover:bg-primary/10 focus:bg-primary/10
-  dark:text-primary-200 dark:hover:bg-surfacedark-200 dark:focus:bg-surfacedark-400;
+  text-primary dark:text-primary-200 dark:hover:bg-surfacedark-400 dark:focus:bg-surfacedark-400;
 }
 
 .btn.nohover {
-  @apply hover:bg-transparent focus:bg-transparent cursor-default
+  @apply hover:bg-transparent focus:bg-transparent cursor-default;
 }
 
 .btn.outlined {
-  @apply border border-gray-400 text-primary;
+  @apply border border-gray-400;
 }
 
 .btn:disabled {
@@ -94,7 +88,7 @@ const btnType = computed(() => {
   @apply hidden lg:block;
 }
 
-@media screen(lg) {
+@screen lg {
   .mobile-icon-only {
     @apply w-auto h-auto py-2.5 pl-5 pr-6;
   }
