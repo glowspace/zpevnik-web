@@ -196,12 +196,12 @@ export const SongListItemFragment = gql`
 <style lang="postcss" scoped>
 tr:hover,
 tr:focus-within {
-  @apply bg-surface-50;
+  @apply bg-surface-50 dark:bg-surfacedark-100;
 }
 
 tr:active,
 tr.active {
-  @apply bg-surface-200;
+  @apply bg-surface-200 dark:bg-surfacedark-200;
 }
 
 .icons {

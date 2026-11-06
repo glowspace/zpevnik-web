@@ -453,5 +453,6 @@ export default {
   width: 100%;
   max-width: 500px;
   height: auto;
+  @apply dark:invert;
 }
 </style>

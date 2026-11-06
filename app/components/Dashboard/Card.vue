@@ -21,7 +21,7 @@ const props = defineProps({ title: String, moreLink: [String, Object] });
   @apply bg-surface-200 dark:bg-surfacedark-200 shadow rounded-xl overflow-hidden divide-y;
 
   :slotted(.card-item) {
-    @apply flex items-center gap-3 px-4 py-3 hover:bg-surface-50 dark:hover:bg-surfacedark-50 border-gray-100 dark:border-gray-900;
+    @apply flex items-center gap-3 px-4 py-3 hover:bg-surface-50 dark:hover:bg-surfacedark-100 border-gray-100 dark:border-gray-900;
   }
 
   :deep(.card-icon),

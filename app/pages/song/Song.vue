@@ -310,6 +310,7 @@ span.song-part-tag {
     transition: 100ms;
     margin-bottom: -0.4em;
     color: #1d6dab;
+    @apply dark:text-primary-200;
   }
 
   &-base {
@@ -330,6 +331,7 @@ span.song-part-tag {
 
   &-bass {
     color: #6b78af;
+    @apply dark:text-primary-400;
     margin-right: 0.4em;
     margin-left: -0.35em;
   }
@@ -342,7 +344,7 @@ span.song-part-tag {
   &-text {
     display: inline-block;
     position: relative;
-    background: white;
+    background: Canvas;
     z-index: 2;
     /*
     // todo: refactor to be usable
@@ -366,6 +368,7 @@ span.song-part-tag {
     width: calc(100% - 0.6em);
     height: 1px;
     border-bottom: 1px solid #b9b9b9;
+    @apply dark:border-b-gray-600;
     top: -0.5em;
     right: -0.5em;
     user-select: none;

@@ -109,11 +109,11 @@
 <style lang="postcss" scoped>
 .line:hover,
 .line:focus-within {
-  @apply bg-surface-50;
+  @apply bg-surface-50 dark:bg-surfacedark-200;
 }
 
 .line:active {
-  @apply bg-surface-200;
+  @apply bg-surface-200 dark:bg-surfacedark-400;
 }
 </style>
 

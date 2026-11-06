@@ -50,7 +50,7 @@ const btnType = computed(() => {
 .btn.primary {
   @apply bg-primary text-white
   hover:opacity-90 hover:shadow-md
-  dark:bg-primary-200 dark:text-primary-800;
+  dark:bg-primary-900 dark:text-primary-800;
 }
 
 .btn.text,
