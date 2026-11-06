@@ -2,11 +2,21 @@
   <ToolboxContainer>
     <div>Posuvky</div>
     <BasicButtonGroup>
-      <BasicButtonGroupItem centered @click="useFlatScale = false" :class="{ active: !useFlatScale }">
-        <span class="text-lg w-8">#</span>
+      <BasicButtonGroupItem
+        centered
+        @click="useFlatScale = false"
+        :class="{ active: !useFlatScale }"
+        class="w-14"
+      >
+        <span class="text-lg">#</span>
       </BasicButtonGroupItem>
-      <BasicButtonGroupItem centered @click="useFlatScale = true" :class="{ active: useFlatScale }">
-        <span class="text-lg w-8">♭</span>
+      <BasicButtonGroupItem
+        centered
+        @click="useFlatScale = true"
+        :class="{ active: useFlatScale }"
+        class="w-14"
+      >
+        <span class="text-lg">♭</span>
       </BasicButtonGroupItem>
     </BasicButtonGroup>
   </ToolboxContainer>

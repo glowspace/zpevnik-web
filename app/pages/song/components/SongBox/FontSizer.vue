@@ -6,17 +6,14 @@
         centered
         @click="fontSizePercent -= 10"
         :disabled="fontSizePercent == 70"
+        class="w-14"
       >
         <BasicIcon name="remove" />
       </BasicButtonGroupItem>
-      <BasicButtonGroupItem
-        centered
-        @click="fontSizePercent = 100"
-        class="w-14"
-      >
+      <BasicButtonGroupItem centered @click="fontSizePercent = 100" class="w-14">
         {{ ((fontSizePercent - 100) / 10).toString().replace('-', '&minus;') }}
       </BasicButtonGroupItem>
-      <BasicButtonGroupItem centered @click="fontSizePercent += 10">
+      <BasicButtonGroupItem centered @click="fontSizePercent += 10" class="w-14">
         <BasicIcon name="add" />
       </BasicButtonGroupItem>
     </BasicButtonGroup>

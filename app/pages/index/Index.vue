@@ -21,9 +21,9 @@
           :to="{ name: 'search' }"
           @click="searchStore.resetBasicSearch"
           icon-name="add"
-          class="text-primary -ml-3"
+          class="text-primary dark:text-primary-200 -ml-3"
         >
-          Zobrazit všechy písně
+          Zobrazit všechny písně
         </BasicButton>
       </div>
     </div>

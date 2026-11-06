@@ -233,6 +233,8 @@
       </div>
 
       <no-sleep />
+
+      <ColorModeLine />
     </PageBottomSheets>
 
     <PageBottomSheets v-model="showMedia" title="Nahrávky" position-absolute>
@@ -267,6 +269,7 @@ import Translations from './Translations';
 import TopBox from './TopBox';
 import BottomBar from './BottomBar';
 import NoSleep from './NoSleep';
+import ColorModeLine from './ColorModeLine';
 import SongLyricParts from '../Renderer/SongLyricParts';
 import Tags from '../Tags';
 
@@ -290,6 +293,7 @@ export default {
     TopBox,
     BottomBar,
     NoSleep,
+    ColorModeLine,
   },
 
   data() {

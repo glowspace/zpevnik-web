@@ -1,11 +1,3 @@
-<script setup lang="ts">
-const colorMode = useColorMode();
-
-const toggleColorMode = () => {
-  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
-};
-</script>
-
 <template>
   <ClientOnly>
     <BasicButton
@@ -18,3 +10,11 @@ const toggleColorMode = () => {
     </template>
   </ClientOnly>
 </template>
+
+<script setup>
+const colorMode = useColorMode();
+
+const toggleColorMode = () => {
+  colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark';
+};
+</script>
