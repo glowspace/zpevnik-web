@@ -13,8 +13,8 @@ export default defineStore('search', {
       this.seed = randomInt(1, 100000);
     },
 
-    resetBasicSearch() {
-      this.searchString = '';
+    resetBasicSearch(str = '') {
+      this.searchString = str;
       this.filters = emptyFilters();
       this.sort = emptySort();
     },

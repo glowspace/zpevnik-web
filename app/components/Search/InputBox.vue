@@ -10,12 +10,7 @@
       tabindex="-1"
     />
     <BasicButton v-else icon-name="arrow_back" icon-only @click="$router.back()" />
-    <div v-if="fake" class="py-2 pl-1 pr-4 grow cursor-text overflow-hidden whitespace-nowrap">
-      <span v-if="modelValue">{{ modelValue }}</span>
-      <span v-else class="text-gray-400">{{ placeholder }}</span>
-    </div>
     <input
-      v-else
       type="search"
       :placeholder="placeholder"
       class="bg-transparent py-2 px-1 ring-0 focus:outline-none grow"
@@ -23,6 +18,7 @@
       v-model="valueModel"
       @keyup.enter="emit('enter')"
       ref="searchInput"
+      :tabindex="!props.fake || props.dashboard ? 0 : -1"
     />
     <LoaderCircular v-if="loading" size="6" class="mx-3" />
     <BasicButton
@@ -43,6 +39,7 @@ import { debounce } from 'lodash-es';
 const props = defineProps({
   modelValue: String,
   fake: Boolean,
+  dashboard: Boolean,
   authors: Boolean,
   loading: Boolean,
 });
@@ -66,7 +63,7 @@ const valueModel = computed({
 });
 const showCross = computed(() => !props.fake && props.modelValue != '');
 const placeholder = computed(() =>
-  props.authors ? 'Hledat autora podle jména' : 'Hledat píseň podle názvu, čísla nebo textu…'
+  props.authors ? 'Hledat autora podle jména' : 'Hledat píseň podle názvu, čísla nebo textu…',
 );
 
 function updateHistoryBack() {
@@ -76,7 +73,7 @@ function updateHistoryBack() {
 onMounted(() => {
   updateHistoryBack();
 
-  if (!props.fake) {
+  if (!props.fake || props.dashboard) {
     searchInput.value.focus();
   }
 });

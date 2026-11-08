@@ -7,10 +7,11 @@
       <div class="custom-container">
         <BasicClickable
           :to="{ name: 'search' }"
-          @click="searchStore.resetBasicSearch"
+          @click="searchStore.resetBasicSearch()"
           class="cursor-default"
+          tabindex="-1"
         >
-          <SearchInputBox fake />
+          <SearchInputBox fake dashboard @update:modelValue="searchText" />
         </BasicClickable>
       </div>
     </PageStickyContainer>
@@ -19,7 +20,7 @@
       <div class="text-center mt-1">
         <BasicButton
           :to="{ name: 'search' }"
-          @click="searchStore.resetBasicSearch"
+          @click="searchStore.resetBasicSearch()"
           icon-name="add"
           class="text-primary dark:text-primary-200 -ml-3"
         >
@@ -46,8 +47,8 @@ const router = useRouter();
 useHead(
   generateHead(
     variation.title + titleSeparator + 'chytrý křesťanský zpěvník',
-    variation.description
-  )
+    variation.description,
+  ),
 );
 
 const legacySearchParams = [
@@ -65,4 +66,9 @@ onMounted(() => {
     router.replace({ name: 'search', query: route.query });
   }
 });
+
+function searchText(value) {
+  searchStore.resetBasicSearch(value);
+  router.push({ name: 'search' });
+}
 </script>
