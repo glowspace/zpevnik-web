@@ -1,7 +1,5 @@
 <template>
-  <div v-if="error">
-    Text písně se nám nepodařilo načíst.
-  </div>
+  <div v-if="error">Text písně se nám nepodařilo načíst.</div>
   <div v-else-if="song_lyric_parts">
     <div
       :class="getSongPartClass(part)"
@@ -21,9 +19,7 @@
         <!-- references \u2009 in JavaScript (these characters are to be replaced by \n by JS) -->
         <span>&#8201;</span>
         <span v-if="!key2" class="song-part-tag"
-          >{{
-            part.type + (part.type ? (part.isVerse ? '.' : ':') : '')
-          }}&nbsp;</span
+          >{{ part.type + (part.type ? (part.isVerse ? '.' : ':') : '') }}&nbsp;</span
         ><template v-for="(chord, key3) in line.chords" :key="key3">
           <chord
             :base="chord.base"
@@ -44,7 +40,9 @@
 
 <script>
 import gql from 'graphql-tag';
-import Chord from './Chord';
+import Chord, { FLAT_SCALE, SHARP_SCALE } from './Chord';
+import { mapState, mapWritableState } from 'pinia';
+import useChordStore from '~/stores/chord.js';
 
 const FETCH_SONG_LYRIC_PARTS = gql`
   query ($id: ID!) {
@@ -68,6 +66,11 @@ export default {
     Chord,
   },
 
+  computed: {
+    ...mapState(useChordStore, ['accidentals', 'transposition']),
+    ...mapWritableState(useChordStore, ['notesForPrediction']),
+  },
+
   apollo: {
     song_lyric_parts_json: {
       query: FETCH_SONG_LYRIC_PARTS,
@@ -80,7 +83,9 @@ export default {
         if (result.data.song_lyric_parts_json == null) {
           this.error = true;
         } else {
-          this.song_lyric_parts = JSON.parse(result.data.song_lyric_parts_json.json);
+          var parts = JSON.parse(result.data.song_lyric_parts_json.json);
+          this.song_lyric_parts = parts;
+          this.notesForPrediction = getNotes(parts); // used for prediction of accidentals
         }
 
         this.$nextTick(() => {
@@ -103,10 +108,7 @@ export default {
     },
     hasNextSibling(chord) {},
     isLineNewLine(line) {
-      return (
-        line.chords.length == 1 &&
-        line.chords[0].base + line.chords[0].text == ''
-      );
+      return line.chords.length == 1 && line.chords[0].base + line.chords[0].text == '';
     },
   },
 
@@ -135,4 +137,25 @@ export default {
     });
   },
 };
+
+function getNotes(parts) {
+  var chords = parts.map((x) => chordsInPart(x));
+  var chordsAll = chords.flat();
+  return chordsAll.map(chordToNote);
+}
+
+function chordsInPart(part) {
+  return part.songLines
+    .map((x) => x.chords.map((x) => x.base))
+    .flat()
+    .filter((x) => x);
+}
+
+function chordToNote(chord) {
+  var note = FLAT_SCALE.indexOf(chord);
+  if (note == -1) {
+    note = SHARP_SCALE.indexOf(chord);
+  }
+  return note;
+}
 </script>
