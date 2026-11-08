@@ -1,17 +1,15 @@
 <template>
   <ToolboxContainer>
-    <div @click="simpleView = !simpleView">Zjednodušit zobrazení</div>
-    <BasicSwitch v-model="simpleView" id="simpleview-switch" />
+    <div @click="showChords = !showChords">Zobrazit akordy</div>
+    <BasicSwitch v-model="showChords" id="chordmode-switch" />
   </ToolboxContainer>
 </template>
 
 <script setup>
-import ToolboxContainer from './ToolboxContainer.vue';
-
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 
-const simpleView = computed({
+const showChords = computed({
   get() {
     return props.modelValue;
   },

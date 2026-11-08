@@ -30,6 +30,5 @@
 </template>
 
 <script setup>
-import ToolboxContainer from './ToolboxContainer.vue';
 const colorMode = useColorMode();
 </script>

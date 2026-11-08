@@ -21,8 +21,6 @@
 </template>
 
 <script setup>
-import ToolboxContainer from './ToolboxContainer.vue';
-
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 

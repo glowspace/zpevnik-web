@@ -8,7 +8,6 @@
 </template>
 
 <script setup>
-import ToolboxContainer from './ToolboxContainer.vue';
 import NoSleep from 'nosleep.js';
 import useChordStore from '~/stores/chord';
 

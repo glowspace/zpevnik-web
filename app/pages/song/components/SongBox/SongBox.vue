@@ -177,32 +177,17 @@
         }"
       >
         <transposition v-model="chordSharedStore.transposition"></transposition>
-      </div>
-
-      <div
-        v-if="song_lyric.has_chords"
-        :class="{
-          'opacity-40 pointer-events-none': !chordSharedStore.showChords,
-        }"
-      >
         <chord-sharp-flat v-model="chordSharedStore.useFlatScale"></chord-sharp-flat>
-      </div>
-
-      <div>
-        <simple-view v-model="chordSharedStore.simpleView"></simple-view>
       </div>
 
       <div v-if="song_lyric.has_chords">
         <chord-mode v-model="chordSharedStore.showChords"></chord-mode>
       </div>
 
-      <div>
-        <font-sizer v-model="chordSharedStore.fontSizePercent"></font-sizer>
-      </div>
-
-      <no-sleep />
-
+      <simple-view v-model="chordSharedStore.simpleView"></simple-view>
+      <font-sizer v-model="chordSharedStore.fontSizePercent"></font-sizer>
       <ColorModeLine />
+      <no-sleep />
     </PageBottomSheets>
 
     <PageBottomSheets v-model="showMedia" title="Nahrávky" position-absolute>
@@ -228,16 +213,17 @@ import { debounce } from 'lodash-es';
 import { mapStores } from 'pinia';
 import useChordStore from '~/stores/chord.js';
 
-import FontSizer from './FontSizer';
-import ChordMode from './ChordMode';
-import SimpleView from './SimpleView';
-import ChordSharpFlat from './ChordSharpFlat';
-import Transposition from './Transposition';
+import FontSizer from '~/components/Toolbox/FontSizer';
+import ChordMode from '~/components/Toolbox/ChordMode';
+import SimpleView from '~/components/Toolbox/SimpleView';
+import ChordSharpFlat from '~/components/Toolbox/ChordSharpFlat';
+import Transposition from '~/components/Toolbox/Transposition';
+import NoSleep from '~/components/Toolbox/NoSleep';
+import ColorModeLine from '~/components/Toolbox/ColorModeLine';
+
 import Translations from './Translations';
 import TopBox from './TopBox';
 import BottomBar from './BottomBar';
-import NoSleep from './NoSleep';
-import ColorModeLine from './ColorModeLine';
 import SongLyricParts from '../Renderer/SongLyricParts';
 import Tags from '../Tags';
 
