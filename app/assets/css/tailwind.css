@@ -39,6 +39,14 @@
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 30;
 }
 
+.icon-fill .material-symbols-outlined, .material-symbols-outlined.icon-fill {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 30;
+}
+
+.fab {
+  @apply font-normal;
+}
+
 strong {
   @apply font-custom-medium;
 }

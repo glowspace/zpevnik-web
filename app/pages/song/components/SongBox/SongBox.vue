@@ -177,7 +177,7 @@
         }"
       >
         <transposition v-model="chordSharedStore.transposition"></transposition>
-        <chord-sharp-flat v-model="chordSharedStore.useFlatScale"></chord-sharp-flat>
+        <chord-sharp-flat v-model="chordSharedStore.accidentals"></chord-sharp-flat>
       </div>
 
       <div v-if="song_lyric.has_chords">

@@ -8,13 +8,13 @@
         <img src="/img/logo.svg" class="h-8" />
       </BasicClickable>
       <BasicClickable :to="{ name: 'index' }" class="link group">
-        <div class="icon-wrapper" :class="{ active: $route.name == 'index' }">
+        <div class="icon-wrapper" :class="{ 'active icon-fill': $route.name == 'index' }">
           <BasicIcon name="home" />
         </div>
         <p class="label">Nástěnka</p>
       </BasicClickable>
       <BasicClickable :to="{ name: 'search' }" class="link group">
-        <div class="icon-wrapper" :class="{ active: $route.name == 'search' }">
+        <div class="icon-wrapper" :class="{ 'active icon-fill': $route.name == 'search' }">
           <BasicIcon name="search" />
         </div>
         <p class="label">Hledání</p>
@@ -24,7 +24,7 @@
         :to="item.path"
         class="link group"
       >
-        <div class="icon-wrapper" :class="{ active: $route.path == item.path }">
+        <div class="icon-wrapper" :class="{ 'active icon-fill': $route.path == item.path }">
           <BasicIcon :name="item.icon" />
         </div>
         <p class="label">{{ item.label }}</p>
@@ -74,10 +74,6 @@ const sideStore = useSideStore();
 
   &.active {
     @apply bg-primary-150 dark:bg-primary-900;
-
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 30;
-    }
   }
 }
 </style>

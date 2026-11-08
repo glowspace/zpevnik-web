@@ -4,15 +4,22 @@
     <BasicButtonGroup>
       <BasicButtonGroupItem
         centered
-        @click="useFlatScale = false"
-        :class="{ active: !useFlatScale }"
+        @click="accidentals = 'auto'"
+        :class="{ 'active icon-fill': accidentals == 'auto' }"
+      >
+        <BasicIcon class="text-xl" name="auto_awesome" />
+      </BasicButtonGroupItem>
+      <BasicButtonGroupItem
+        centered
+        @click="accidentals = 'sharp'"
+        :class="{ active: accidentals == 'sharp' }"
       >
         <span class="text-lg">#</span>
       </BasicButtonGroupItem>
       <BasicButtonGroupItem
         centered
-        @click="useFlatScale = true"
-        :class="{ active: useFlatScale }"
+        @click="accidentals = 'flat'"
+        :class="{ active: accidentals == 'flat' }"
       >
         <span class="text-lg">♭</span>
       </BasicButtonGroupItem>
@@ -21,15 +28,5 @@
 </template>
 
 <script setup>
-const props = defineProps(['modelValue']);
-const emit = defineEmits(['update:modelValue']);
-
-const useFlatScale = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emit('update:modelValue', value);
-  },
-});
+const accidentals = defineModel();
 </script>

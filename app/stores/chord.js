@@ -5,12 +5,15 @@ export default defineStore('chordShared', {
     transposition: 0,
     showChords: true,
     simpleView: false,
-    useFlatScale: false,
+    accidentals: 'auto',
     fontSizePercent: 100,
     noSleep: null
   }),
   persist: {
     storage: piniaPluginPersistedstate.cookies(),
-    pick: ['showChords', 'simpleView', 'useFlatScale', 'fontSizePercent'],
-  }
+    pick: ['showChords', 'simpleView', 'accidentals', 'fontSizePercent'],
+  },
+  getters: {
+    useFlatScale: (state) => state.accidentals == 'flat',
+  },
 })
