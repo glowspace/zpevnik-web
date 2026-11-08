@@ -42,7 +42,7 @@ export default {
   computed: {
     topSongbooks() {
       if (this.songbooks) {
-        return this.songbooks.filter((s) => s.songs_count > 100).slice(0, 5);
+        return this.songbooks.filter((s) => s.songs_count > 100).slice(0, 4);
       }
     },
   },
