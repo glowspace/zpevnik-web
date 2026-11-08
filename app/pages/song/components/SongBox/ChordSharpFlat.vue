@@ -6,7 +6,6 @@
         centered
         @click="useFlatScale = false"
         :class="{ active: !useFlatScale }"
-        class="w-14"
       >
         <span class="text-lg">#</span>
       </BasicButtonGroupItem>
@@ -14,7 +13,6 @@
         centered
         @click="useFlatScale = true"
         :class="{ active: useFlatScale }"
-        class="w-14"
       >
         <span class="text-lg">♭</span>
       </BasicButtonGroupItem>

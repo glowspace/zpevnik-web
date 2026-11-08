@@ -2,13 +2,13 @@
   <ToolboxContainer>
     <div>Transpozice</div>
     <BasicButtonGroup>
-      <BasicButtonGroupItem centered @click="transpose(-1)" class="w-14">
+      <BasicButtonGroupItem centered @click="transpose(-1)">
         <BasicIcon name="remove" />
       </BasicButtonGroupItem>
-      <BasicButtonGroupItem centered @click="reset()" class="w-14">
+      <BasicButtonGroupItem centered @click="reset()">
         {{ value.toString().replace('-', '&minus;') }}
       </BasicButtonGroupItem>
-      <BasicButtonGroupItem centered @click="transpose(1)" class="w-14">
+      <BasicButtonGroupItem centered @click="transpose(1)">
         <BasicIcon name="add" />
       </BasicButtonGroupItem>
     </BasicButtonGroup>

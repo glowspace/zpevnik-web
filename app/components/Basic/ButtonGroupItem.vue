@@ -1,5 +1,5 @@
 <template>
-  <BasicClickable :class="{ 'segmented-item': true, centered }" :disabled="disabled">
+  <BasicClickable :class="{ 'segmented-item': true, centered }" class="min-w-14" :disabled="disabled">
     <slot />
   </BasicClickable>
 </template>

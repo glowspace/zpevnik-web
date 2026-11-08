@@ -65,7 +65,7 @@ const FETCH_SONG_LYRIC = gql`
       secondary_name_2
       public_route
       type
-      lyrics_no_chords
+      lyrics_no_chords_no_comments
       bible_refs_src
       lilypond_svg
       external_rendered_scores {
@@ -179,7 +179,7 @@ export default {
 
     getDescription() {
       if (this.song_lyric) {
-        let lyrics = this.song_lyric.lyrics_no_chords;
+        let lyrics = this.song_lyric.lyrics_no_chords_no_comments;
         lyrics = lyrics.replace(/\n{2,}/g, ' // ');
         lyrics = lyrics.replace(/([.:,;!?])\s*\n/g, '$1 ');
         lyrics = lyrics.replace(/\n/g, ' / ');
