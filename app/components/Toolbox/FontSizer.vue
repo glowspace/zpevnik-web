@@ -31,18 +31,20 @@ const fontSizePercent = computed({
   set(value) {
     let sl = import.meta.client ? document.getElementById('song-lyrics') : null;
 
-    if (!sl.style.height) {
-      sl.style.height = sl.clientHeight + 'px';
-    }
+    if (sl) {
+      if (!sl.style.height) {
+        sl.style.height = sl.clientHeight + 'px';
+      }
 
-    if (refreshHandler.value) {
-      clearTimeout(refreshHandler.value);
-    }
+      if (refreshHandler.value) {
+        clearTimeout(refreshHandler.value);
+      }
 
-    // prevent screen jumping
-    refreshHandler.value = setTimeout(() => {
-      sl.style.height = null;
-    }, 1000);
+      // prevent screen jumping
+      refreshHandler.value = setTimeout(() => {
+        sl.style.height = null;
+      }, 1000);
+    }
 
     emit('update:modelValue', value);
   },

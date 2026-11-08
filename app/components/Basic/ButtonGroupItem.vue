@@ -13,8 +13,8 @@ const props = defineProps({ centered: Boolean, disabled: Boolean });
   @apply [&.active]:bg-primary-150 dark:[&.active]:bg-primary-900
   hover:bg-surface-400 dark:hover:bg-surfacedark-400
   h-10 relative inline-flex flex-row items-center justify-center gap-x-2 py-2.5 pl-4 pr-5 text-sm tracking-[.00714em]
-  font-custom-medium border border-gray-500 transition;
-  @apply mr-[-1px] overflow-hidden;
+  font-custom-medium border border-gray-500 transition
+  mr-[-1px] overflow-hidden select-none;
 }
 
 .segmented-item:disabled {
