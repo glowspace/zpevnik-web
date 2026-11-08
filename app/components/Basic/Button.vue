@@ -50,13 +50,13 @@ const btnType = computed(() => {
 .btn.primary {
   @apply bg-primary text-white
   hover:opacity-90 hover:shadow-md
-  dark:bg-primary-900 dark:text-primary-800;
+  dark:bg-primary-900;
 }
 
 .btn.text,
 .btn.outlined {
   @apply hover:bg-primary/10 focus:bg-primary/10
-  dark:hover:bg-surfacedark-400 dark:focus:bg-surfacedark-400;
+  dark:hover:bg-gray/20 dark:focus:bg-gray/20;
 }
 
 .btn.nohover {

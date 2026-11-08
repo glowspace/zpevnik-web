@@ -20,7 +20,7 @@
       <Kebab :items="kebabMenuItems" button-class="text-gray-600" />
     </div>
   </div>
-  <div v-else class="shadow-md bg-primary-150 rounded-lg overflow-hidden">
+  <div v-else class="shadow-md bg-primary-150 dark:bg-primary-900 rounded-lg overflow-hidden">
     <div class="flex flex-row items-center gap-1 p-1">
       <BasicButton
         :icon-name="typeClass"

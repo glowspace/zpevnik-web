@@ -1,5 +1,5 @@
 <template>
-  <div class="shadow bg-surface-100 mx-4 my-12 px-6 py-4 inline-block">
+  <div class="shadow bg-surface-100 dark:bg-surfacedark-100 mx-4 my-12 px-6 py-4 inline-block">
     <p class="mb-3">
       <span v-if="statusCode == 404">
         Stránka nebyla nalezena. <br />Zkuste použít vyhledávání.
