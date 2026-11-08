@@ -19,6 +19,7 @@
       @keyup.enter="emit('enter')"
       ref="searchInput"
       :tabindex="!props.fake || props.dashboard ? 0 : -1"
+      :autofocus="props.dashboard"
     />
     <LoaderCircular v-if="loading" size="6" class="mx-3" />
     <BasicButton
@@ -72,8 +73,9 @@ function updateHistoryBack() {
 
 onMounted(() => {
   updateHistoryBack();
+  const isBackNavigation = Boolean(router.options.history.state.forward);
 
-  if (!props.fake || props.dashboard) {
+  if (!props.fake && !isBackNavigation) {
     searchInput.value.focus();
   }
 });
