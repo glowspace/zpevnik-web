@@ -4,15 +4,8 @@
       <DashboardLogo />
     </div>
     <PageStickyContainer :on-dashboard="true">
-      <div class="custom-container">
-        <BasicClickable
-          :to="{ name: 'search' }"
-          @click="searchStore.resetBasicSearch()"
-          class="cursor-default"
-          tabindex="-1"
-        >
-          <SearchInputBox fake dashboard @update:modelValue="searchText" />
-        </BasicClickable>
+      <div class="custom-container" @click="openSearch()">
+        <SearchInputBox fake dashboard @update:modelValue="openSearch" />
       </div>
     </PageStickyContainer>
     <div class="custom-container">
@@ -67,8 +60,8 @@ onMounted(() => {
   }
 });
 
-function searchText(value) {
-  searchStore.resetBasicSearch(value);
+function openSearch(str = '') {
+  searchStore.resetBasicSearch(str);
   router.push({ name: 'search' });
 }
 </script>
