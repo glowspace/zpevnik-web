@@ -9,11 +9,7 @@
       >
         <BasicIcon name="remove" />
       </BasicButtonGroupItem>
-      <BasicButtonGroupItem
-        centered
-        @click="fontSizePercent = 100"
-        class="w-14"
-      >
+      <BasicButtonGroupItem centered @click="fontSizePercent = 100">
         {{ ((fontSizePercent - 100) / 10).toString().replace('-', '&minus;') }}
       </BasicButtonGroupItem>
       <BasicButtonGroupItem centered @click="fontSizePercent += 10">
@@ -24,8 +20,6 @@
 </template>
 
 <script setup>
-import ToolboxContainer from './ToolboxContainer.vue';
-
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 const refreshHandler = ref(null);
@@ -37,18 +31,20 @@ const fontSizePercent = computed({
   set(value) {
     let sl = import.meta.client ? document.getElementById('song-lyrics') : null;
 
-    if (!sl.style.height) {
-      sl.style.height = sl.clientHeight + 'px';
-    }
+    if (sl) {
+      if (!sl.style.height) {
+        sl.style.height = sl.clientHeight + 'px';
+      }
 
-    if (refreshHandler.value) {
-      clearTimeout(refreshHandler.value);
-    }
+      if (refreshHandler.value) {
+        clearTimeout(refreshHandler.value);
+      }
 
-    // prevent screen jumping
-    refreshHandler.value = setTimeout(() => {
-      sl.style.height = null;
-    }, 1000);
+      // prevent screen jumping
+      refreshHandler.value = setTimeout(() => {
+        sl.style.height = null;
+      }, 1000);
+    }
 
     emit('update:modelValue', value);
   },

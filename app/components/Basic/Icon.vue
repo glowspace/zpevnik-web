@@ -17,13 +17,3 @@ const props = defineProps({
   type: String,
 });
 </script>
-
-<style lang="postcss">
-.icon-fill {
-  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 30;
-}
-
-.fab {
-  @apply font-normal;
-}
-</style>

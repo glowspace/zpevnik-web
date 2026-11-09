@@ -14,9 +14,15 @@
             href: !song_lyric ? '' : $config.public.adminUrl + '/song/' + song_lyric.id + '/edit',
           },
           {
+            label: 'Regenschori.cz',
+            icon: 'church',
+            href: !song_lyric ? '' : $config.public.regenschoriUrl + song_lyric.public_route,
+            hidden: !$config.public.variation.showRegenschoriLink,
+          },
+          {
             label: 'Tisk',
             icon: 'print',
-            href: 'javascript:window.print()',
+            click: printPage,
           },
         ]"
       />
@@ -59,7 +65,7 @@ const FETCH_SONG_LYRIC = gql`
       secondary_name_2
       public_route
       type
-      lyrics_no_chords
+      lyrics_no_chords_no_comments
       bible_refs_src
       lilypond_svg
       external_rendered_scores {
@@ -157,6 +163,10 @@ export default {
   },
 
   methods: {
+    printPage() {
+      window.print();
+    },
+
     getTitle() {
       return (
         (this.song_lyric
@@ -169,7 +179,7 @@ export default {
 
     getDescription() {
       if (this.song_lyric) {
-        let lyrics = this.song_lyric.lyrics_no_chords;
+        let lyrics = this.song_lyric.lyrics_no_chords_no_comments;
         lyrics = lyrics.replace(/\n{2,}/g, ' // ');
         lyrics = lyrics.replace(/([.:,;!?])\s*\n/g, '$1 ');
         lyrics = lyrics.replace(/\n/g, ' / ');
@@ -205,14 +215,14 @@ export default {
         ? String(
             this.$config.public.variation.songbook == null
               ? this.song_lyric?.song_number
-              : this.songbookNumber
+              : this.songbookNumber,
           )
         : 'načítám…';
     },
 
     songbookNumber() {
       return this.song_lyric.songbook_records.find(
-        (record) => record.pivot.songbook.id == this.$config.public.variation.songbook
+        (record) => record.pivot.songbook.id == this.$config.public.variation.songbook,
       )?.pivot.number;
     },
   },
@@ -300,6 +310,7 @@ span.song-part-tag {
     transition: 100ms;
     margin-bottom: -0.4em;
     color: #1d6dab;
+    @apply dark:text-primary-200;
   }
 
   &-base {
@@ -320,6 +331,7 @@ span.song-part-tag {
 
   &-bass {
     color: #6b78af;
+    @apply dark:text-primary-400;
     margin-right: 0.4em;
     margin-left: -0.35em;
   }
@@ -332,7 +344,7 @@ span.song-part-tag {
   &-text {
     display: inline-block;
     position: relative;
-    background: white;
+    background: Canvas;
     z-index: 2;
     /*
     // todo: refactor to be usable
@@ -356,6 +368,7 @@ span.song-part-tag {
     width: calc(100% - 0.6em);
     height: 1px;
     border-bottom: 1px solid #b9b9b9;
+    @apply dark:border-b-gray-600;
     top: -0.5em;
     right: -0.5em;
     user-select: none;

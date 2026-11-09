@@ -16,7 +16,13 @@ export default defineNuxtConfig({
     preset: 'node_cluster',
   },
   compatibilityDate: '2025-09-20',
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/apollo'],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/color-mode',
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
+    '@nuxtjs/apollo',
+  ],
   runtimeConfig: {
     public: {
       siteUrl,
@@ -42,8 +48,19 @@ export default defineNuxtConfig({
     '/api': { proxy: process.env.REMOTE_API },
   },
   tailwindcss: {
-    configPath: '~/assets/tailwind.config.js',
+    configPath: '~/assets/tailwind.config.cjs',
     cssPath: '~/assets/css/tailwind.css',
+  },
+  postcss: {
+    plugins: {
+      'postcss-nested': {},
+      'tailwindcss/nesting': false,
+    },
+  },
+  colorMode: {
+    classSuffix: '', // class name: .dark
+    preference: 'system',
+    fallback: 'light',
   },
   devServer: {
     port: +(process.env.DEV_PORT || 3000),

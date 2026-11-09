@@ -102,7 +102,7 @@ export default {
 .floating-action-button {
   @apply flex justify-center items-center p-4 rounded-2xl ml-1
   text-sm gap-x-2 md:pr-5 font-custom-medium
-  bg-primary-150 dark:bg-primary-700 hover:bg-primary-200;
+  bg-primary-150 dark:bg-primary-900 hover:bg-primary-200 dark:hover:bg-primary-800;
 }
 
 .floating-action-button:disabled {

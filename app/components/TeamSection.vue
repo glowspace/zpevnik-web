@@ -2,9 +2,7 @@
   <h3 v-if="title">{{ title }}</h3>
   <div class="member-list">
     <div v-for="{ name, role } in members" class="member">
-      <p class="my-2">
-        {{ name }}<br /><span class="text-gray">{{ role }}</span>
-      </p>
+      {{ name }}<br /><span class="text-gray">{{ role }}</span>
     </div>
   </div>
 </template>
@@ -16,4 +14,8 @@ const props = defineProps({
 });
 </script>
 
-<style lang="postcss" scoped></style>
+<style lang="postcss" scoped>
+.member-list {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-4;
+}
+</style>

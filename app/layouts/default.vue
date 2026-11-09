@@ -5,7 +5,8 @@
     />
     <div class="flex">
       <PageSideList />
-      <div class="grow">
+      <!-- min-w-0 overflow problems for narrow devices -->
+      <div class="grow min-w-0">
         <slot />
       </div>
     </div>

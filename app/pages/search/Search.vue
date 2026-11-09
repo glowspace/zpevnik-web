@@ -45,7 +45,7 @@
       </div>
     </div>
     <div
-      class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 bg-surface-50"
+      class="hidden md:block sticky top-0 p-8 h-screen overflow-auto border-l border-primary-150 dark:border-surfacedark-500 bg-surface-50 dark:bg-surfacedark-50"
     >
       <div>
         <Filters
@@ -98,7 +98,7 @@ export default {
   head() {
     return generateHead(
       'Hledání' + this.$config.public.titleSeparator + this.$config.public.variation.title,
-      this.$config.public.variation.description
+      this.$config.public.variation.description,
     );
   },
 

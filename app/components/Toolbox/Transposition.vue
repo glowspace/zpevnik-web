@@ -5,7 +5,7 @@
       <BasicButtonGroupItem centered @click="transpose(-1)">
         <BasicIcon name="remove" />
       </BasicButtonGroupItem>
-      <BasicButtonGroupItem centered @click="reset()" class="w-14">
+      <BasicButtonGroupItem centered @click="reset()">
         {{ value.toString().replace('-', '&minus;') }}
       </BasicButtonGroupItem>
       <BasicButtonGroupItem centered @click="transpose(1)">
@@ -16,8 +16,6 @@
 </template>
 
 <script setup>
-import ToolboxContainer from './ToolboxContainer.vue';
-
 const props = defineProps(['modelValue']);
 const emit = defineEmits(['update:modelValue']);
 

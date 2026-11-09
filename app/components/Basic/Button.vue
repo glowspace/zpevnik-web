@@ -16,13 +16,7 @@
       },
     ]"
   >
-    <BasicIcon
-      v-if="iconName"
-      :name="iconName"
-      :type="iconType"
-      :fill="iconFill"
-      class="icon"
-    />
+    <BasicIcon v-if="iconName" :name="iconName" :type="iconType" :fill="iconFill" class="icon" />
     <slot />
   </BasicClickable>
 </template>
@@ -50,27 +44,27 @@ const btnType = computed(() => {
 <style lang="postcss" scoped>
 .btn {
   @apply inline-flex flex-row items-center justify-center gap-x-2 py-2.5 px-5 rounded-[6.25rem]
-  text-sm tracking-[.00714em] font-custom-medium no-underline transition;
+  text-sm tracking-[.00714em] font-custom-medium no-underline transition select-none;
 }
 
 .btn.primary {
   @apply bg-primary text-white
   hover:opacity-90 hover:shadow-md
-  dark:bg-primary-200 dark:text-primary-800;
+  dark:bg-primary-900;
 }
 
 .btn.text,
 .btn.outlined {
   @apply hover:bg-primary/10 focus:bg-primary/10
-  dark:text-primary-200 dark:hover:bg-surfacedark-200 dark:focus:bg-surfacedark-400;
+  dark:hover:bg-gray/20 dark:focus:bg-gray/20;
 }
 
 .btn.nohover {
-  @apply hover:bg-transparent focus:bg-transparent cursor-default
+  @apply hover:bg-transparent focus:bg-transparent cursor-default;
 }
 
 .btn.outlined {
-  @apply border border-gray-400 text-primary;
+  @apply border border-gray-400 text-primary dark:text-primary-200;
 }
 
 .btn:disabled {
@@ -94,7 +88,7 @@ const btnType = computed(() => {
   @apply hidden lg:block;
 }
 
-@media screen(lg) {
+@screen lg {
   .mobile-icon-only {
     @apply w-auto h-auto py-2.5 pl-5 pr-6;
   }

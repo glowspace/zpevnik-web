@@ -8,11 +8,11 @@
     />
     <ul
       role="dropdownmenu"
-      class="kebab-menu opacity-0 invisible absolute top-[3.1rem] z-30 transition duration-400 ease-in-out right-0 min-w-[200px] inline-flex flex-col py-2 rounded bg-surface-50 dark:bg-surfacedark-200 shadow-md dark:shadow-gray-50/10"
+      class="kebab-menu opacity-0 invisible absolute top-[3.1rem] z-30 transition duration-400 ease-in-out right-0 min-w-[200px] inline-flex flex-col py-2 rounded bg-surface-50 dark:bg-surfacedark-200 shadow-md"
       :class="{ opened: kebabOpened }"
     >
       <li v-for="(item, key) in items" :key="key" class="relative">
-        <BasicClickable class="kebab-item" :href="item.href" :to="item.to" :target="item.target" @click="item.click">
+        <BasicClickable v-if="!item.hidden" class="kebab-item" :href="item.href" :to="item.to" :target="item.target" @click="item.click">
           <BasicIcon :name="item.icon" />
           {{ item.label }}
         </BasicClickable>
@@ -42,6 +42,6 @@ function kebabWrapperBlurred(event) {
 }
 
 .kebab-item {
-  @apply min-h-[3rem] flex flex-row items-center gap-4 py-2 px-3 hover:bg-surface-200 dark:hover:bg-primary-700;
+  @apply min-h-[3rem] flex w-full flex-row items-center gap-4 py-2 px-3 hover:bg-surface-200 dark:hover:bg-surfacedark-400;
 }
 </style>

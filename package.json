@@ -1,5 +1,6 @@
 {
   "name": "krestansky-zpevnik",
+  "type": "module",
   "private": true,
   "engines": {
     "node": ">=24.11.0"
@@ -13,17 +14,20 @@
   },
   "dependencies": {
     "@nuxtjs/apollo": "^5.0.0-alpha.15",
+    "@nuxtjs/color-mode": "^4.1.0",
     "@nuxtjs/tailwindcss": "^6.14.0",
-    "@pinia/nuxt": "^0.11.3",
-    "@types/node": "^24.10.0",
+    "@pinia/nuxt": "^1.0.3",
+    "@types/node": "^26.6.6",
     "bible-liturgy-utils": "https://github.com/glowspace/bible-liturgy-utils#commonjs",
-    "bigpicture": "^2.6.2",
-    "bowser": "^2.11.0",
-    "lodash-es": "^4.17.21",
+    "bigpicture": "^2.6.4",
+    "bowser": "^2.15.0",
+    "lodash-es": "^4.18.1",
     "nosleep.js": "^0.12.0",
-    "nuxt": "^4.2.1",
-    "pinia": "^3.0.4",
-    "vue": "^3.5.24"
+    "nuxt": "^4.6.4",
+    "pinia": "^4.1.0",
+    "pinia-plugin-persistedstate": "^4.7.1",
+    "postcss-nested": "^9.0.1",
+    "vue": "^3.5.45"
   },
   "packageManager": "yarn@4.11.0"
 }

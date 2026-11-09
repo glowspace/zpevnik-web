@@ -8,13 +8,13 @@
         <img src="/img/logo.svg" class="h-8" />
       </BasicClickable>
       <BasicClickable :to="{ name: 'index' }" class="link group">
-        <div class="icon-wrapper" :class="{ active: $route.name == 'index' }">
+        <div class="icon-wrapper" :class="{ 'active icon-fill': $route.name == 'index' }">
           <BasicIcon name="home" />
         </div>
         <p class="label">Nástěnka</p>
       </BasicClickable>
       <BasicClickable :to="{ name: 'search' }" class="link group">
-        <div class="icon-wrapper" :class="{ active: $route.name == 'search' }">
+        <div class="icon-wrapper" :class="{ 'active icon-fill': $route.name == 'search' }">
           <BasicIcon name="search" />
         </div>
         <p class="label">Hledání</p>
@@ -24,7 +24,7 @@
         :to="item.path"
         class="link group"
       >
-        <div class="icon-wrapper" :class="{ active: $route.path == item.path }">
+        <div class="icon-wrapper" :class="{ 'active icon-fill': $route.path == item.path }">
           <BasicIcon :name="item.icon" />
         </div>
         <p class="label">{{ item.label }}</p>
@@ -37,7 +37,7 @@
         v-if="sideStore.params != null && sideStore.index != null"
         @click="sideStore.show = !sideStore.show"
       />
-      <BasicButton disabled icon-name="dark_mode" icon-only />
+      <ColorModeToggle />
     </div>
   </div>
 </template>
@@ -49,9 +49,9 @@ const sideStore = useSideStore();
 
 <style lang="postcss" scoped>
 .menu-wrapper {
-  @apply w-full text-sm fixed bottom-0 flex-col items-center justify-between
-  shadow md:shadow-none md:border-r border-primary-150
-  bg-surface-200 dark:bg-surfacedark-200
+  @apply w-full text-sm fixed bottom-0 flex-col items-center justify-between z-10
+  shadow md:shadow-none md:border-r border-primary-150 dark:border-surfacedark-500
+  bg-surface-200 dark:bg-surfacedark-100
   md:left-0 md:top-0 md:w-auto md:h-full md:py-4 md:overflow-y-auto md:overflow-x-hidden;
 }
 
@@ -70,18 +70,10 @@ const sideStore = useSideStore();
 }
 
 .icon-wrapper {
-  @apply relative w-16 h-8 group-hover:bg-primary-150 dark:group-hover:bg-primary-700 flex items-center justify-center rounded-2xl transition;
+  @apply relative w-16 h-8 group-hover:bg-primary-150 dark:group-hover:bg-surfacedark-500 flex items-center justify-center rounded-2xl transition;
 
   &.active {
-    @apply bg-primary-150;
-
-    .dark & {
-      @apply hover:bg-primary-700 bg-primary-700;
-    }
-
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 30;
-    }
+    @apply bg-primary-150 dark:bg-primary-900;
   }
 }
 </style>

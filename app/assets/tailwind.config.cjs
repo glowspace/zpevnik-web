@@ -87,7 +87,7 @@ const variation = variations.find((v) => v.key == variationKey) || variations[0]
 
 // note: if you change these values, you may need to restart the `yarn dev` nuxt server
 module.exports = {
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: 'selector',
   theme: {
     colors: {
       inherit: 'inherit',
@@ -102,18 +102,18 @@ module.exports = {
       primary: variation.primary,
       red: '#B3261E',
       gray: {
-        DEFAULT: '#787579',
-        10: '#FFFBFE',
-        50: '#F5EEFA',
-        100: '#E7E0EC',
-        200: '#CAC4D0',
-        300: '#AEA9B4',
-        400: '#938F99',
-        500: '#79747E',
-        600: '#605D66',
-        700: '#49454F',
-        800: '#322F37',
-        900: '#1D1A22',
+        DEFAULT: '#777777',
+        10: '#FCFCFC',
+        50: '#F2F2F2',
+        100: '#E4E4E4',
+        200: '#C7C7C7',
+        300: '#ACACAC',
+        400: '#929292',
+        500: '#777777',
+        600: '#5F5F5F',
+        700: '#474747',
+        800: '#313131',
+        900: '#1C1C1C',
       },
       surface: variation.surface,
       surfacedark: {

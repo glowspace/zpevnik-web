@@ -4,11 +4,11 @@
   >
     <!-- slow -->
     <div
-      class="bar absolute inset-0 w-full bg-primary dark:bg-primary-200"
+      class="bar absolute inset-0 w-full bg-primary dark:bg-primary-900"
     ></div>
     <!-- fast -->
     <div
-      class="bar absolute inset-0 w-full bg-primary dark:bg-primary-200"
+      class="bar absolute inset-0 w-full bg-primary dark:bg-primary-900"
     ></div>
   </div>
 </template>

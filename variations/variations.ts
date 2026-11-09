@@ -10,6 +10,7 @@ interface IVariation {
   hideTags?: boolean;
   hideAuthorSearch?: boolean;
   showLiturgyApproval?: boolean;
+  showRegenschoriLink?: boolean;
 }
 
 const variations: IVariation[] = [
@@ -21,6 +22,7 @@ const variations: IVariation[] = [
     itunesId: '1475375453',
     navbar: [{ path: '/o-zpevniku', icon: 'info', label: 'O zpěvníku' }],
     showLiturgyApproval: true,
+    showRegenschoriLink: true,
   },
   {
     key: 'ez',

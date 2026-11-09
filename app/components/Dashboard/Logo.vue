@@ -6,6 +6,9 @@
       alt="logo"
     />
     <h1>{{ $config.public.variation.name }}</h1>
+    <div class="ml-auto">
+      <DashboardSettings />
+    </div>
   </div>
 </template>
 

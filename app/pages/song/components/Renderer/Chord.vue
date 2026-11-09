@@ -11,9 +11,7 @@
       <span class="chord-right-bracket" v-if="isOptional">)</span>
       <span v-if="baseNote.length > 0">&#8202;</span>
     </span>
-    <span :class="['chord-text', !isDivided ? 'chord-text-spaced' : '']"
-      ><slot></slot
-    ></span>
+    <span :class="['chord-text', !isDivided ? 'chord-text-spaced' : '']"><slot></slot></span>
     <span class="chord-line" v-if="isDivided && displayChordSign"></span>
   </span>
 </template>
@@ -45,7 +43,7 @@ export default {
       return this.transposeChordBy(
         this.base,
         this.chordSharedStore.transposition,
-        this.chordSharedStore.useFlatScale
+        this.chordSharedStore.useFlatScale,
       );
     },
 
@@ -57,7 +55,7 @@ export default {
       return this.transposeChordBy(
         this.bass,
         this.chordSharedStore.transposition,
-        this.chordSharedStore.useFlatScale
+        this.chordSharedStore.useFlatScale,
       );
     },
 
@@ -70,53 +68,6 @@ export default {
 
   methods: {
     transposeChordBy(chord, semitones, useFlatScale) {
-      const BASIC_SCALE = [
-        'C',
-        '-',
-        'D',
-        '-',
-        'E',
-        'F',
-        '-',
-        'G',
-        '-',
-        'A',
-        '-',
-        'H',
-      ];
-
-      // Chromatic scale starting from C using flats only.
-      const FLAT_SCALE = [
-        'C',
-        'Db',
-        'D',
-        'Eb',
-        'Fb',
-        'F',
-        'Gb',
-        'G',
-        'Ab',
-        'A',
-        'B',
-        'Cb',
-      ];
-
-      // Chromatic scale starting from C using sharps only.
-      const SHARP_SCALE = [
-        'H#',
-        'C#',
-        'D',
-        'D#',
-        'E',
-        'E#',
-        'F#',
-        'G',
-        'G#',
-        'A',
-        'A#',
-        'H',
-      ];
-
       let scale = useFlatScale ? FLAT_SCALE : SHARP_SCALE;
       let chord_i = FLAT_SCALE.indexOf(chord);
       if (chord_i === -1) {
@@ -129,4 +80,12 @@ export default {
     },
   },
 };
+
+export const BASIC_SCALE = ['C', '-', 'D', '-', 'E', 'F', '-', 'G', '-', 'A', '-', 'H'];
+
+// Chromatic scale starting from C using flats only.
+export const FLAT_SCALE = ['C', 'Db', 'D', 'Eb', 'Fb', 'F', 'Gb', 'G', 'Ab', 'A', 'B', 'Cb'];
+
+// Chromatic scale starting from C using sharps only.
+export const SHARP_SCALE = ['H#', 'C#', 'D', 'D#', 'E', 'E#', 'F#', 'G', 'G#', 'A', 'A#', 'H'];
 </script>

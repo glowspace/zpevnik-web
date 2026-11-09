@@ -37,4 +37,8 @@ export default defineStore('side', {
     previous: (state) => generateLinkObject(toRaw(state.params), state.songs, state.index, state.index - 1),
     next: (state) => generateLinkObject(toRaw(state.params), state.songs, state.index, state.index + 1),
   },
+  persist: {
+    storage: piniaPluginPersistedstate.localStorage(),
+    pick: ['show'],
+  }
 })

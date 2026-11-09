@@ -18,19 +18,15 @@ const props = defineProps({ title: String, moreLink: [String, Object] });
 
 <style lang="postcss" scoped>
 .card-body {
-  @apply bg-surface-200 shadow rounded-xl overflow-hidden;
+  @apply bg-surface-200 dark:bg-surfacedark-200 shadow rounded-xl overflow-hidden divide-y;
 
   :slotted(.card-item) {
-    @apply flex items-center gap-3 px-4 py-3 hover:bg-surface-50 border-gray-100;
-
-    &:not(:last-child) {
-      @apply border-b;
-    }
+    @apply flex items-center gap-3 px-4 py-3 hover:bg-surface-50 dark:hover:bg-surfacedark-100 border-gray-100 dark:border-gray-900;
   }
 
   :deep(.card-icon),
   :deep(.card-note) {
-    @apply inline-flex justify-center items-center text-gray-700;
+    @apply inline-flex justify-center items-center text-gray-700 dark:text-gray-300;
 
     &:first-child {
       @apply text-center w-7 h-6;

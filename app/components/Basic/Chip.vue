@@ -14,8 +14,8 @@ const props = defineProps({
 <style lang="postcss" scoped>
 .chip {
   @apply inline-flex flex-row items-center gap-2 h-8 py-1.5 px-3
-  border border-gray-500 dark:border-gray-200 rounded-lg text-sm tracking-[.00714em] m-1 transition-colors
-  hover:bg-surface-400 [&.active]:bg-primary-150;
+  border border-gray-500 rounded-lg text-sm tracking-[.00714em] m-1 transition-colors
+  hover:bg-surface-400 dark:hover:bg-surfacedark-400 [&.active]:bg-primary-150 dark:[&.active]:bg-surfacedark-400;
 
   &.tag-blue {
     @apply hover:bg-blue/[.15] [&.active]:bg-blue/30;

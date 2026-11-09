@@ -13,7 +13,7 @@
       >
         <!-- header -->
         <div
-          class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 pb-2 pt-2.5 flex-shrink-0 shadow bg-surface-300"
+          class="min-h-[56px] flex flex-row items-center gap-3 pl-6 pr-3 pb-2 pt-2.5 flex-shrink-0 shadow bg-surface-300 dark:bg-surfacedark-300"
         >
           <h3
             class="flex flex-grow text-base tracking-[.009375em] font-custom-medium"

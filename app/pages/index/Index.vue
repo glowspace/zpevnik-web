@@ -4,14 +4,8 @@
       <DashboardLogo />
     </div>
     <PageStickyContainer :on-dashboard="true">
-      <div class="custom-container">
-        <BasicClickable
-          :to="{ name: 'search' }"
-          @click="searchStore.resetBasicSearch"
-          class="cursor-default"
-        >
-          <SearchInputBox fake />
-        </BasicClickable>
+      <div class="custom-container" @click="openSearch()">
+        <SearchInputBox fake dashboard @update:modelValue="openSearch" />
       </div>
     </PageStickyContainer>
     <div class="custom-container">
@@ -19,11 +13,11 @@
       <div class="text-center mt-1">
         <BasicButton
           :to="{ name: 'search' }"
-          @click="searchStore.resetBasicSearch"
+          @click="searchStore.resetBasicSearch()"
           icon-name="add"
-          class="text-primary -ml-3"
+          class="text-primary dark:text-primary-200 -ml-3"
         >
-          Zobrazit všechy písně
+          Zobrazit všechny písně
         </BasicButton>
       </div>
     </div>
@@ -46,8 +40,8 @@ const router = useRouter();
 useHead(
   generateHead(
     variation.title + titleSeparator + 'chytrý křesťanský zpěvník',
-    variation.description
-  )
+    variation.description,
+  ),
 );
 
 const legacySearchParams = [
@@ -65,4 +59,9 @@ onMounted(() => {
     router.replace({ name: 'search', query: route.query });
   }
 });
+
+function openSearch(str = '') {
+  searchStore.resetBasicSearch(str);
+  router.push({ name: 'search' });
+}
 </script>
