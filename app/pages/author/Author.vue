@@ -132,6 +132,21 @@ if (import.meta.server) {
   checkNotFound(author.value);
 }
 
+// update history
+import useUserStore from '~/stores/user';
+const userStore = useUserStore();
+watchEffect(() => {
+  if (import.meta.server) return;
+
+  if (author.value) {
+    userStore.historyAdd({
+      type: 'author',
+      path: author.value.public_route,
+      label: author.value.name,
+    });
+  }
+});
+
 // head content
 const { variation, titleSeparator } = useRuntimeConfig()?.public;
 const aboutStrings = ['autorovi', 'hudebním uskupení', 'schole', 'kapele', 'sboru'];

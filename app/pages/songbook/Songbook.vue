@@ -53,6 +53,7 @@ const FETCH_SONGBOOK = gql`
       name
       is_private
       songbook_img_url
+      shortcut
     }
   }
 `;
@@ -67,10 +68,26 @@ if (import.meta.server) {
   checkNotFound(songbook.value);
 }
 
+// update history
+import useUserStore from '~/stores/user';
+const userStore = useUserStore();
+watchEffect(() => {
+  if (import.meta.server) return;
+
+  if (songbook.value) {
+    userStore.historyAdd({
+      type: 'songbook',
+      path: { name: 'songbook', params: { id: songbook.value.id } },
+      label: songbook.value.name,
+      note: songbook.value.shortcut,
+    });
+  }
+});
+
 // head content
 const { variation, titleSeparator } = useRuntimeConfig()?.public;
 const title = computed(
-  () => (songbook.value?.name ?? 'Zpěvník') + titleSeparator + variation.title
+  () => (songbook.value?.name ?? 'Zpěvník') + titleSeparator + variation.title,
 );
 useHead(generateHead(title, 'I tento zpěvník u nás najdete'));
 

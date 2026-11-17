@@ -39,6 +39,8 @@ import SongLoading from './SongLoading';
 import Bowser from 'bowser';
 import { getFullName } from '~/components/Song/Name';
 import { SongListItemFragment } from '~/components/Song/ListItem';
+import useUserStore from '~/stores/user.js';
+import { mapStores } from 'pinia';
 
 const VISIT_SONG = gql`
   mutation ($song_lyric_id: Int!, $is_mobile: Boolean, $visit_type: VisitType!) {
@@ -211,13 +213,13 @@ export default {
 
   computed: {
     topBarTitle() {
-      return this.song_lyric
-        ? String(
-            this.$config.public.variation.songbook == null
-              ? this.song_lyric?.song_number
-              : this.songbookNumber,
-          )
-        : 'načítám…';
+      return this.song_lyric ? String(this.songNumber) : 'načítám…';
+    },
+
+    songNumber() {
+      return this.$config.public.variation.songbook == null
+        ? this.song_lyric.song_number
+        : this.songbookNumber;
     },
 
     songbookNumber() {
@@ -225,6 +227,8 @@ export default {
         (record) => record.pivot.songbook.id == this.$config.public.variation.songbook,
       )?.pivot.number;
     },
+
+    ...mapStores(useUserStore),
   },
 
   apollo: {
@@ -248,19 +252,38 @@ export default {
   },
 
   mounted() {
+    // only runs once when the page component is initially created
     if (this.song_lyric && window.location.pathname != this.song_lyric.public_route) {
       window.history.replaceState(null, '', this.song_lyric.public_route);
     }
+  },
 
-    // todo: notify when SSR (this works only on client)
+  watch: {
+    song_lyric: {
+      immediate: true,
+      handler() {
+        if (import.meta.server) return;
 
-    setTimeout(() => {
-      this.notifySongVisit('GENERIC');
-    }, 2000);
+        if (this.song_lyric) {
+          this.userStore.historyAdd({
+            type: 'song',
+            path: this.song_lyric.public_route,
+            label: this.song_lyric.name,
+            note: this.songNumber,
+          });
 
-    setTimeout(() => {
-      this.notifySongVisit('LONG');
-    }, 20000);
+          // todo: notify when SSR (this works only on client)
+        }
+
+        setTimeout(() => {
+          this.notifySongVisit('GENERIC');
+        }, 2000);
+
+        setTimeout(() => {
+          this.notifySongVisit('LONG');
+        }, 20000);
+      },
+    },
   },
 };
 </script>

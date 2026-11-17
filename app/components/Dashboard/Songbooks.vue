@@ -1,20 +1,19 @@
 <template>
-  <div v-if="topSongbooks && topSongbooks.length">
-    <DashboardCard title="Zpěvníky" :more-link="{ name: 'songbooks' }">
-      <BasicClickable
-        v-for="songbook in topSongbooks"
-        :key="songbook.id"
-        :to="{ name: 'songbook', params: { id: songbook.id } }"
-        class="card-item"
-      >
-        <span class="card-icon">
-          <div class="w-5 h-5 rounded" :style="{ background: songbook.color }"></div>
-        </span>
-        <span>{{ songbook.name }}</span>
-        <span class="card-note">{{ songbook.shortcut }}</span>
-      </BasicClickable>
-    </DashboardCard>
-  </div>
+  <DashboardCard title="Zpěvníky" :more-link="{ name: 'songbooks' }">
+    <BasicClickable
+      v-if="topSongbooks"
+      v-for="songbook in topSongbooks"
+      :key="songbook.id"
+      :to="{ name: 'songbook', params: { id: songbook.id } }"
+      class="card-item"
+    >
+      <span class="card-icon">
+        <div class="w-5 h-5 rounded" :style="{ background: songbook.color }"></div>
+      </span>
+      <span>{{ songbook.name }}</span>
+      <span class="card-note">{{ songbook.shortcut }}</span>
+    </BasicClickable>
+  </DashboardCard>
 </template>
 
 <script>
